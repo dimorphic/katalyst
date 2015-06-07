@@ -58,3 +58,5 @@ node_modules/
 
 # Project custom #
 ##################
+src/app/js/vendor/
+src/app/scss/vendor/
