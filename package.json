@@ -1,0 +1,40 @@
+{
+  "name": "katalyst",
+  "version": "0.0.1",
+  "description": "Katalyst Boilerplate",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "katalyst",
+    "boilerplate",
+    "html",
+    "css",
+    "javascript"
+  ],
+  "author": "Sabin Tudor",
+  "license": "CC",
+  "devDependencies": {
+    "browser-sync": "^2.7.6",
+    "clear": "0.0.1",
+    "del": "*",
+    "gulp": "*",
+    "gulp-autoprefixer": "*",
+    "gulp-load-plugins": "*",
+    "gulp-minify-css": "*",
+    "gulp-notify": "*",
+    "gulp-rename": "*",
+    "gulp-sass": "*",
+    "gulp-size": "^1.2.1",
+    "gulp-util": "*",
+    "lodash": "*",
+    "q": "^1.4.1",
+    "require-dir": "*",
+    "run-sequence": "*",
+    "tracer": "^0.7.4"
+  },
+  "dependencies": {
+    "jquery": "^2.1.4"
+  }
+}
