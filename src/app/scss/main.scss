@@ -1,0 +1,16 @@
+// ------------------------------------ //
+// 	APP STYLE
+// ------------------------------------ //
+
+@import "lib/reset";
+// @import "tools/mixins";
+// @import "utils/clearfix";
+// @import "utils/global";
+
+// @DEBUG SCSS
+$var: #0ff;
+
+body {
+  background: $var;
+  color: #000;
+}
