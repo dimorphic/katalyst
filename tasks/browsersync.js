@@ -8,6 +8,9 @@ var gulp = require('gulp');
 var browserSync = require('browser-sync');
 var browserReload = browserSync.reload;
 
+// fix routes for SPAs ('cannot GET file' error in BS)
+var historyApiFallback = require('connect-history-api-fallback');
+
 //
 //	BROWSER:SERVE task
 //
@@ -23,6 +26,8 @@ gulp.task('browser:serve', function () {
 
 		server: './dist',
 		baseDir: './dist',
+
+		middleware: [ historyApiFallback() ],
 
 		port: 8080,
 		ui: {
