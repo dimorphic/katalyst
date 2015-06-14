@@ -10,5 +10,8 @@ var del = require('del');
 //	CLEAN task
 gulp.task('clean', function(cb) {
 	// del build dir
-	return del([CONFIG.paths.app.dest], cb);
+	return del([
+		CONFIG.paths.app.dest,
+		CONFIG.paths.app.temp
+	], cb);
 });
