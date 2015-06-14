@@ -10,17 +10,3 @@ var runSequence = require('run-sequence');
 //  ...spawns gulp with 'develop' task as real 'default'
 //
 gulp.task('default', ['respawn']);
-
-//
-//  DEVELOPMENT task
-//
-gulp.task('develop', function(cb){
-    return runSequence('clear:terminal', 'build:dev', ['browser:serve', 'watch'], cb);
-});
-
-//
-//  BUILD task
-//
-gulp.task('build', function(cb){
-    // @TODO
-});
