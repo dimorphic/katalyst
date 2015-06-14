@@ -25,6 +25,7 @@ gulp.task('sass', function(cb) {
 	// stream SCSS
 	var stream = gulp.src(input)
 	.pipe(sass().on('error', function(err){
+		browserSync.notify('[error] SASS compile fail', 3000);
 		helpers.onSassError(err, cb);
 	}))
 	.pipe(gulp.dest(output));
