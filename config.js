@@ -31,8 +31,9 @@ CONFIG.deps = {
 CONFIG.paths = {
 	// APP base dirs
 	app: {
-		src: 		'src/',	// app sources dir
-	    dest: 		'dist/'	// app build dir
+		src: 		'src/', 	// app sources dir
+	    dest: 		'dist/', 	// app build dir
+		temp:		'.tmp/' 	// app temp dir (if needed)
 	},
 
 	// CSS
@@ -46,7 +47,12 @@ CONFIG.paths = {
     js: {
         src: 		'src/app/js/**/*.js',
 		vendor: 	'src/app/js/vendor/',
-        dest: 		'dist/js/'
+        dest: 		'dist/js/',
+		lint: 		[
+						'src/app/js/**/*.js',
+						'src/app/js/**/*.jsx',
+						'!src/app/js/vendor/**'
+					]
     },
 
 	// TEMPLATES
