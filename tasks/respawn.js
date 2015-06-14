@@ -25,14 +25,14 @@ gulp.task('kill:gulp', function() {
 //
 //	SPAWN GULP task
 //
-gulp.task('respawn', ['clear:terminal'], function() {
+gulp.task('respawn', function() {
 	//
     // spawn child process helper
     // ...used to respawn default process when needed (eg: config change?)
 	//
     var spawnGulp = function() {
         console.log('>>> [process:spawn] spawning new gulp...');
-        var proc = spawn('gulp', ['develop'], { stdio: 'inherit' }); // child will use parent's stdios
+        var proc = spawn('gulp', ['build:dev'], { stdio: 'inherit' }); // child will use parent's stdios
 
         // when this process gets terminated (as user intends)
         // ...spawn again
