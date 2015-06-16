@@ -13,7 +13,7 @@ gulp.task('build:dev', ['clean'], function(cb) {
       'copy:dependencies',
       [
           'css:dev',
-        //   'js:dev',
+          'js:dev',
           'copy'
       ],
       'browser:serve',
