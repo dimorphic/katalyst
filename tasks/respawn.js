@@ -19,7 +19,7 @@ gulp.task('clear:terminal', function() {
 //
 gulp.task('kill:gulp', function() {
     console.log('<<< [process:kill] killing...');
-    process.exit(0);
+    process.exit(7); // we use this kill code to know when to respawn
 });
 
 //
@@ -36,8 +36,13 @@ gulp.task('respawn', function() {
 
         // when this process gets terminated (as user intends)
         // ...spawn again
-        proc.on('close', function (code) {
-            spawnGulp();
+        proc.on('close', function(code) {
+            console.log('<<< [process.exit] code: ', code);
+
+            // lucky number seven!
+            // if (code === 7) {
+                spawnGulp();
+            // }
         });
     };
 
