@@ -2,7 +2,10 @@
 	// Rules are: 0 (off), 1 (warning), or 2 (error)
 	// http://eslint.org/docs/configuring/
 	"env": {
-		"browser": true
+		"browser": true,
+		"es6": false,
+		"node": false,
+		"amd": true
 	},
 
 	"globals": {
@@ -20,6 +23,7 @@
 		"no-caller": 2,
 		"no-comma-dangle": 1,
 		"no-cond-assign": 2,
+		"no-extra-strict": 0,
 		"no-console": 0,
 		"no-constant-condition": 2,
 		"no-debugger": 2,
@@ -45,9 +49,10 @@
 			"vars": "all",
 			"args": "none"
 		}],
+		"no-use-before-define": "nofunc",
 		"no-underscore-dangle": 0,
 		"radix": 1,
-		"strict": [2, "function"],
+		"strict": 2,
 
 		// Style / Formatting
 		"camelcase": 1,
