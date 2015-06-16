@@ -40,7 +40,8 @@ CONFIG.paths = {
 	css: {
 		src: 		'src/app/scss/**/*.scss',
 		vendor: 	'src/app/scss/vendor/',
-		dest: 		'dist/css/'
+		dest: 		'dist/css/',
+		temp:		'.tmp/css/'
 	},
 
 	// JS

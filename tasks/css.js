@@ -20,7 +20,7 @@ var minifyCSS = require('gulp-minify-css');
 gulp.task('sass', function(cb) {
 	// stream I/O
 	var input = CONFIG.paths.css.src;
-	var output = CONFIG.paths.css.dest;
+	var output = CONFIG.paths.css.temp;
 
 	// stream SCSS
 	var stream = gulp.src(input)
@@ -39,7 +39,7 @@ gulp.task('sass', function(cb) {
 //
 gulp.task('css:dev', ['sass'], function() {
 	// stream I/O
-	var input = CONFIG.paths.css.dest + '**/*.css';
+	var input = CONFIG.paths.css.temp + '**/*.css';
 	var output = CONFIG.paths.css.dest;
 
 	// stream CSS
