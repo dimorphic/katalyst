@@ -1,5 +1,5 @@
 require.config({
-    baseUrl: "",
+    baseUrl: '/js/',
 
     // alias libraries paths.  Must set 'angular'
     paths: {
