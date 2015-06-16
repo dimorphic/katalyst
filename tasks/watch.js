@@ -26,7 +26,7 @@ var paths = {
 
 	js: {
 		src: [CONFIG.paths.js.src],
-		tasks: ['js:dev', 'browser:reload']
+		tasks: ['js:dev']
 	},
 
 	scss: {
