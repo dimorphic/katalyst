@@ -37,7 +37,5 @@
     "run-sequence": "*",
     "tracer": "^0.7.4"
   },
-  "dependencies": {
-    "jquery": "^2.1.4"
-  }
+  "dependencies": {}
 }
