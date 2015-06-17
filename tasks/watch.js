@@ -43,7 +43,7 @@ gulp.task('watch', function() {
 	notify('WATCHING OVER:');
 
 	// respawn gulp on changes
-	gulp.watch(['gulpfile.js', 'tasks/**/*.js'], ['kill:gulp']);
+	gulp.watch(['gulpfile.js', 'config.js', 'tasks/**/*.js'], ['kill:gulp']);
 
 	// build watch list
 	for (var path in paths) {
