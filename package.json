@@ -13,7 +13,7 @@
     "css",
     "javascript"
   ],
-  "author": "Sabin Tudor",
+  "author": "Sabin Tudor <nyx@dimorphic.net>",
   "license": "CC",
   "devDependencies": {
     "browser-sync": "^2.7.6",
