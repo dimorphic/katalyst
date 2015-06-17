@@ -16,12 +16,11 @@ var CONFIG = {};
 // to app sources vendor dir
 //
 CONFIG.deps = {
-	css: [
-        'node_modules/vex-js/css/vex.css'
-    ],
+	css: [],
 
 	js: [
-        'node_modules/jquery/dist/jquery.js'
+		'src/vendor/requirejs/require.js',
+        'src/vendor/jquery/dist/jquery.js'
 	]
 };
 
@@ -40,20 +39,21 @@ CONFIG.paths = {
 	css: {
 		src: 		'src/app/scss/**/*.scss',
 		vendor: 	'src/app/scss/vendor/',
-		dest: 		'dist/css/',
-		temp:		'.tmp/css/'
+		temp:		'.tmp/css/',
+		dest: 		'dist/css/'
 	},
 
 	// JS
     js: {
         src: 		'src/app/js/**/*.js',
 		vendor: 	'src/app/js/vendor/',
-        dest: 		'dist/js/',
 		lint: 		[
 						'src/app/js/**/*.js',
 						'src/app/js/**/*.jsx',
 						'!src/app/js/vendor/**'
-					]
+					],
+		temp:		'.tmp/js/',
+		dest: 		'dist/js/'
     },
 
 	// TEMPLATES
