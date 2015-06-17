@@ -1,6 +1,11 @@
-(function() {
+define(function(require){
 	'use strict';
 
-	console.log('test');
-	// console.log(test);
-})();
+	var $ = require('jquery');
+
+	// DOM ready
+	$(function() {
+		console.log('test bro');
+		// console.log(test);
+	});
+});
