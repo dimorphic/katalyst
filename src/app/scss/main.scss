@@ -3,14 +3,42 @@
 // ------------------------------------ //
 
 @import "lib/reset";
-// @import "tools/mixins";
-// @import "utils/clearfix";
-// @import "utils/global";
+@import "tools/mixins";
+@import "utils/clearfix";
+@import "utils/global";
 
 // @DEBUG SCSS
-$var: #0ff;
+@import url(http://fonts.googleapis.com/css?family=Exo:400,500,600);
 
 body {
-  background: $var;
-  color: #000;
+    font-family: 'Exo', sans-serif;
+}
+
+ul {
+    font-size: 0;
+}
+
+// app wrapper
+#app {
+    @include positionCenter;
+    overflow: hidden;
+}
+
+// Brain
+.Braincell {
+    $cell-size: 20px;
+
+    display: inline-block;
+
+    //width: $cell-size;
+    //height: $cell-size;
+
+    background: #ccc;
+
+    font-size: 14px;
+    font-weight: 500;
+    //line-height: 1;
+
+    text-align: center;
+    overflow: hidden;
 }
