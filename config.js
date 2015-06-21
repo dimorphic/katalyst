@@ -20,7 +20,9 @@ CONFIG.deps = {
 
 	js: [
 		'src/vendor/requirejs/require.js',
-        'src/vendor/jquery/dist/jquery.js'
+        'src/vendor/jquery/dist/jquery.js',
+
+		'src/vendor/react/react.js'
 	]
 };
 
@@ -45,13 +47,19 @@ CONFIG.paths = {
 
 	// JS
     js: {
-        src: 		'src/app/js/**/*.js',
+        src: [
+					'src/app/js/**/*.js',
+					'src/app/js/**/*.jsx'
+		],
+
 		vendor: 	'src/app/js/vendor/',
-		lint: 		[
-						'src/app/js/**/*.js',
-						'src/app/js/**/*.jsx',
-						'!src/app/js/vendor/**'
-					],
+
+		lint: [
+					'src/app/js/**/*.js',
+					'src/app/js/**/*.jsx',
+					'!src/app/js/vendor/**'
+		],
+
 		temp:		'.tmp/js/',
 		dest: 		'dist/js/'
     },
