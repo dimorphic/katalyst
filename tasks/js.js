@@ -13,10 +13,10 @@ var babel = require('gulp-babel');
 var uglify = require('gulp-uglify');
 
 //
-//	JS:BABEL
+//	JS:TRANSFORM
 //	do any transforms here (es 6-to-5, react, etc)
 //
-gulp.task('js:babel', function() {
+gulp.task('js:transform', function() {
 	// stream I/O
 	var input = CONFIG.paths.js.src;
 	var output = CONFIG.paths.js.temp;
@@ -52,7 +52,7 @@ gulp.task('js:copy', function() {
 gulp.task('js:dev', function(cb) {
 	runSequence(
 		'eslint',
-		'js:babel',
+		'js:transform',
 		// 'requirejs',
 		'js:copy',
 	cb);
