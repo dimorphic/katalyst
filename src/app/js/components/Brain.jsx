@@ -21,7 +21,7 @@ define(function(require){
 		getInitialState: function() {
 			return {
 				// cells size
-				cellsSize: 20,
+				cellsSize: 25,
 
 				brainCells: []
 			};
@@ -33,10 +33,12 @@ define(function(require){
 
 			this.buildMemory();
 
-			// switch memory noise map
-			setInterval(function() {
-				this.buildNoiseMap(this.state.brainCells);
-			}.bind(this), 7000);
+			// randomize memory activity
+			if (this.anim.randomizeMemory) {
+				setInterval(function() {
+					this.buildNoiseMap(this.state.brainCells);
+				}.bind(this), 7000);
+			}
 		},
 
 		componentDidMount: function() {
@@ -109,17 +111,20 @@ define(function(require){
 		},
 
 		// animation options
-		// (hint: check mode param)
 		anim: {
-			mode: 0, // 0 - full memory
-					// 1 - single memory
+			// play with this!
+			randomizeMemory: 1, // randomize memory activity?
+			updateMode: 0,		// 0 - full memory
+								// 1 - single memory
 
-			useRAF: true,
-			updateDelay: 1000, // ignored if rAF true
+			// animation settings
+			useRAF: true,		// steroids mode on?
+			updateDelay: 1000,	// ignored if RAF true, slowpoke
 
-			updateTimer: null, // update tracker
-			cellsCount: null,
-			noise: null
+			// trackers
+			updateTimer: null,	// update timer (raf / interval)
+			cellsCount: null,	// memory cells counters (max cols / rows)
+			noise: null			// noise map
 		},
 
 		addNoise: function(cellPosition) {
@@ -136,7 +141,7 @@ define(function(require){
 			var newMemory = Memory.createFullMemory(this.state.cellsSize, this.anim.cellsCount.maxCells);
 
 			// add noise to memory cells
-			newMemory = this.buildNoiseMap(newMemory);
+			// newMemory = this.buildNoiseMap(newMemory);
 
 			// ...and update it
 			this.setState({ brainCells: newMemory });
@@ -161,7 +166,7 @@ define(function(require){
 				this.anim.updateTimer = window.requestAnimFrame(this.redraw);
 			}
 
-			if (this.anim.mode) {
+			if (this.anim.updateMode) {
 				this.updateSingleMemory();
 			} else {
 				this.updateMultipleMemories();
@@ -169,22 +174,25 @@ define(function(require){
 		},
 
 		updateSingleMemory: function() {
-			console.log('!! updating single memory');
-
-			var newMemory = Memory.createSingleMemory();
+			// console.log('!! updating single memory');
 
 			// grab random brain cell
 			var randomCell = this.state.brainCells[Math.floor(Math.random() * this.state.brainCells.length)];
+
+			// generate random memory
+			var newMemory = Memory.createSingleMemory();
+
+			// assign new query 'activity'
 			randomCell.query = newMemory.query;
 
 			this.setState({ brainCells: this.state.brainCells });
 		},
 
 		updateMultipleMemories: function() {
-			var maxCells = this.state.brainCells.length / 2;
+			var maxCells = parseInt(this.state.brainCells.length / 2);
 			var activeCells = ~~(Math.random() * maxCells) + 1;
 
-			console.log('!! updating multiple memories ', activeCells);
+			// console.log('!! updating multiple memories ', maxCells, activeCells);
 
 			for (var i = 0; i <= activeCells; i++) {
 				// grab random brain cell
@@ -193,12 +201,10 @@ define(function(require){
 				// generate random memory
 				var newMemory = Memory.createSingleMemory();
 
-				// assign new
+				// assign new query 'activity'
 				randomCell.query = newMemory.query;
 			}
 
-			// this.setState({});
-			// this.setState(this.state);
 			this.setState({ brainCells: this.state.brainCells });
 		}
 
