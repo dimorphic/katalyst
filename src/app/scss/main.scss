@@ -12,10 +12,21 @@
 
 body {
     font-family: 'Exo', sans-serif;
+    background: #19242F;
 }
 
-ul {
-    font-size: 0;
+ul { font-size: 0; }
+
+// debugger
+.debug {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    padding: 10px;
+
+    background: rgba(255, 0, 0, 0.6);
+    color: #fff;
 }
 
 // app wrapper
@@ -30,14 +41,8 @@ ul {
 
     display: inline-block;
 
-    //width: $cell-size;
-    //height: $cell-size;
-
-    background: #ccc;
-
     font-size: 14px;
     font-weight: 500;
-    //line-height: 1;
 
     text-align: center;
     overflow: hidden;
