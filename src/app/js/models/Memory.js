@@ -5,15 +5,18 @@ define(function(require){
 	var helpers = require('helpers');
 
 	//
-	// get max cells helper
+	// get cells helper
 	//
-	var _getMaxCells = function(cellSize) {
-		var cellsX = Math.floor(window.innerWidth / cellSize);
-		var cellsY = Math.floor(window.innerHeight / cellSize);
+	var _getCellsCount = function(cellSize) {
+		var cellsCols = Math.floor(window.innerWidth / cellSize);
+		var cellsRows = Math.floor(window.innerHeight / cellSize);
+		var maxCells = cellsCols * cellsRows;
 
-		var maxCells = cellsX * cellsY;
-
-		return maxCells;
+		return {
+			maxCells: maxCells,
+			maxCols: cellsCols,
+			maxRows: cellsRows
+		};
 	};
 
 	//
@@ -33,8 +36,7 @@ define(function(require){
 				id: i,
 				name: 'memory' + i,
 				size: cellSize,
-				query: helpers.getRandomChar(),
-				color: helpers.getRandomColor()
+				query: helpers.getRandomChar()
 			});
 		}
 
@@ -45,18 +47,17 @@ define(function(require){
 	// build SINGLE memory helper
 	//
 	var _buildSingleMemory = function() {
-		console.log('Building single memory...');
+		// console.log('Building single memory...');
 
 		// return random memory query & color
 		return {
-			query: helpers.getRandomChar(),
-			color: helpers.getRandomColor()
+			query: helpers.getRandomChar()
 		};
 	};
 
 	// expose
 	return {
-		getMaxCells: _getMaxCells,
+		getCellsCount: _getCellsCount,
 		createSingleMemory: _buildSingleMemory,
 		createFullMemory: _buildFullMemory
 	};
