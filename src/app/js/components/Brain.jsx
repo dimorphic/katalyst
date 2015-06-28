@@ -4,9 +4,7 @@ define(function(require){
 	// deps
 	var React = require('react');
 	var helpers = require('helpers');
-
 	var Noise = require('noise');
-	// var noise = window.noise;
 
 	// models
 	var Memory = require('models/Memory');
