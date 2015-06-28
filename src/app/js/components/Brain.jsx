@@ -54,9 +54,10 @@ define(function(require){
 		},
 
 		onScreenResize: function() {
-			// get cells max count
+			// recount max cells
 			this.anim.cellsCount = Memory.getCellsCount(this.state.cellsSize);
 
+			// rebuild memory
 			this.buildMemory();
 		},
 
@@ -81,6 +82,15 @@ define(function(require){
 				colIndex: colIndex,
 				rowIndex: rowIndex
 			};
+		},
+
+		getCellNoise: function(cellPosition) {
+			var noise = this.anim.noise;
+
+			var cellValue = noise.perlin2(cellPosition.colIndex / 15, cellPosition.rowIndex / 15);
+			var cellPercent = Math.floor(((cellValue + 1) / 2) * 100);
+
+			return cellPercent;
 		},
 
 		render: function() {
@@ -127,21 +137,12 @@ define(function(require){
 			noise: null			// noise map
 		},
 
-		addNoise: function(cellPosition) {
-			var noise = this.anim.noise;
-
-			var cellValue = noise.perlin2(cellPosition.colIndex / 15, cellPosition.rowIndex / 15);
-			var cellPercent = Math.floor(((cellValue + 1) / 2) * 100);
-
-			return cellPercent;
-		},
-
 		buildMemory: function() {
 			// build memory
 			var newMemory = Memory.createFullMemory(this.state.cellsSize, this.anim.cellsCount.maxCells);
 
 			// add noise to memory cells
-			// newMemory = this.buildNoiseMap(newMemory);
+			newMemory = this.buildNoiseMap(newMemory);
 
 			// ...and update it
 			this.setState({ brainCells: newMemory });
@@ -154,7 +155,7 @@ define(function(require){
 			// add noise to memory cells
 			memoryCells.forEach(function(memoryCell, idx) {
 				var cellPosition = this.getCellIndex(memoryCell.id);
-				memoryCell.noise = this.addNoise(cellPosition);
+				memoryCell.noise = this.getCellNoise(cellPosition);
 			}.bind(this));
 
 			return memoryCells;
