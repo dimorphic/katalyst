@@ -14,6 +14,12 @@ var sass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
 var minifyCSS = require('gulp-minify-css');
 
+// Browsers support for autoprefixer
+var BROWSER_SUPPORT = {
+	browsers: ['last 2 versions'],
+	cascade: false
+};
+
 //
 //	SASS COMPILE task
 //
@@ -44,10 +50,7 @@ gulp.task('css:dev', ['sass'], function() {
 
 	// stream CSS
 	var stream = gulp.src(input)
-	.pipe(autoprefixer({
-		browsers: ['last 2 versions'],
-		cascade: false
-	}))
+	.pipe(autoprefixer(BROWSER_SUPPORT))
 	.pipe(gulp.dest(output))
 	.pipe(browserSync.stream({ match: '**/*.css' }));
 
@@ -60,16 +63,13 @@ gulp.task('css:dev', ['sass'], function() {
 //
 gulp.task('css:prod', ['sass'], function() {
 	// stream I/O
-	var input = CONFIG.paths.css.dest + '**/*.css';
+	var input = CONFIG.paths.css.temp + '**/*.css';
 	var output = CONFIG.paths.css.dest;
 
 	// stream CSS
 	var stream = gulp.src(input)
-	.pipe($.autoprefixer({
-		browsers: ['last 2 versions'],
-		cascade: false
-	}))
-	.pipe($.minifyCSS({
+	.pipe(autoprefixer(BROWSER_SUPPORT))
+	.pipe(minifyCSS({
 		keepSpecialComments: 0
 	}))
 	.pipe(gulp.dest(output));

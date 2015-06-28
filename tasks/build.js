@@ -20,8 +20,21 @@ gulp.task('build:dev', ['clear:terminal', 'browser:serve', 'watch'], function(cb
 });
 
 //
-//  BUILD task
+// BUILD:PROD task
 //
-gulp.task('build', function(cb){
-    // @TODO
+gulp.task('build:prod', function(cb) {
+	runSequence(
+		'clean',
+		'copy:dependencies',
+		[
+			'css:prod',
+			'js:prod',
+			'copy'
+		],
+	cb);
 });
+
+//
+// BUILD task
+//
+gulp.task('build', ['build:prod']);
