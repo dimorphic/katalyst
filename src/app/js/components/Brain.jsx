@@ -17,7 +17,7 @@ define(function(require){
 	//
 	var animMixin = {
 		// animation options
-		anim: {
+		animation: {
 			// play with this!
 			randomizeMemoryNoise: 1, // randomize memory activity?
 			updateMode: 0,		// 0 - full memory
@@ -35,7 +35,7 @@ define(function(require){
 
 		buildMemory: function() {
 			// build memory
-			var newMemory = Memory.createFullMemory(this.state.cellsSize, this.anim.cellsCount.maxCells);
+			var newMemory = Memory.createFullMemory(this.state.cellsSize, this.animation.cellsCount.maxCells);
 
 			// add noise to memory cells
 			newMemory = this.buildNoiseMap(newMemory);
@@ -46,7 +46,7 @@ define(function(require){
 
 		buildNoiseMap: function(memoryCells) {
 			// reset noise
-			this.anim.noise = new Noise(Math.random());
+			this.animation.noise = new Noise(Math.random());
 
 			// add noise to memory cells
 			memoryCells.forEach(function(memoryCell, idx) {
@@ -59,11 +59,11 @@ define(function(require){
 
 		redraw: function() {
 			// request another frame?
-			if (this.anim.useRAF) {
-				this.anim.updateTimer = window.requestAnimFrame(this.redraw);
+			if (this.animation.useRAF) {
+				this.animation.updateTimer = window.requestAnimFrame(this.redraw);
 			}
 
-			if (this.anim.updateMode) {
+			if (this.animation.updateMode) {
 				this.updateSingleMemory();
 			} else {
 				this.updateMultipleMemories();
@@ -80,8 +80,8 @@ define(function(require){
 			var colIndex = null;
 
 			// find row index
-			for (var currentRow = 1; currentRow <= this.anim.cellsCount.maxRows; currentRow++) {
-				var max = currentRow * this.anim.cellsCount.maxCols;
+			for (var currentRow = 1; currentRow <= this.animation.cellsCount.maxRows; currentRow++) {
+				var max = currentRow * this.animation.cellsCount.maxCols;
 
 				if (cellId < max) {
 					rowIndex = currentRow;
@@ -90,7 +90,7 @@ define(function(require){
 			}
 
 			// find col index
-			colIndex = cellId - (this.anim.cellsCount.maxCols * (rowIndex - 1));
+			colIndex = cellId - (this.animation.cellsCount.maxCols * (rowIndex - 1));
 
 			return {
 				colIndex: colIndex,
@@ -99,7 +99,7 @@ define(function(require){
 		},
 
 		getCellNoise: function(cellPosition) {
-			var noise = this.anim.noise;
+			var noise = this.animation.noise;
 
 			var cellValue = noise.perlin2(cellPosition.colIndex / 15, cellPosition.rowIndex / 15);
 			var cellPercent = Math.floor(((cellValue + 1) / 2) * 100);
@@ -125,12 +125,12 @@ define(function(require){
 
 		componentWillMount: function() {
 			// get cells max count
-			this.anim.cellsCount = Memory.getCellsCount(this.state.cellsSize);
+			this.animation.cellsCount = Memory.getCellsCount(this.state.cellsSize);
 
 			this.buildMemory();
 
 			// randomize memory activity
-			if (this.anim.randomizeMemoryNoise) {
+			if (this.animation.randomizeMemoryNoise) {
 				setInterval(function() {
 					this.buildNoiseMap(this.state.brainCells);
 				}.bind(this), 7000);
@@ -141,17 +141,17 @@ define(function(require){
 			// handle window resize
 			window.addEventListener('resize', this.onScreenResize);
 
-			// start anim (rebuild memory)
-			if (this.anim.useRAF) {
+			// start animation (rebuild memory)
+			if (this.animation.useRAF) {
 				this.redraw();
 			} else {
-				this.anim.updateTimer = setInterval(this.redraw, this.anim.updateDelay);
+				this.animation.updateTimer = setInterval(this.redraw, this.animation.updateDelay);
 			}
 		},
 
 		onScreenResize: function() {
 			// recount max cells
-			this.anim.cellsCount = Memory.getCellsCount(this.state.cellsSize);
+			this.animation.cellsCount = Memory.getCellsCount(this.state.cellsSize);
 
 			// rebuild memory
 			this.buildMemory();
@@ -174,7 +174,7 @@ define(function(require){
 					<div className="debug">
 						{cells.length}
 						<br/>
-						{this.anim.cellsCount.maxCols + ' x ' + this.anim.cellsCount.maxRows}
+						{this.animation.cellsCount.maxCols + ' x ' + this.animation.cellsCount.maxRows}
 					</div>
 
 					<ul>
