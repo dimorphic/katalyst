@@ -10,9 +10,6 @@ define(function(require){
 
 	// DOM ready
 	$(function() {
-
-		console.log('test bro!');
-
 		React.render(<Brain />, document.getElementById('app'));
 	});
 });
