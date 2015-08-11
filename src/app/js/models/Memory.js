@@ -3,62 +3,218 @@ define(function(require){
 
 	// deps
 	var helpers = require('helpers');
+	var Noise = require('noise');
 
 	//
-	// get cells helper
+	//	Memory Entity
 	//
-	var _getCellsCount = function(cellSize) {
-		var cellsCols = Math.floor(window.innerWidth / cellSize);
-		var cellsRows = Math.floor(window.innerHeight / cellSize);
-		var maxCells = cellsCols * cellsRows;
+	var Memory = function(opts) {
+		if (!opts) { opts = {}; }
 
-		return {
-			maxCells: maxCells,
-			maxCols: cellsCols,
-			maxRows: cellsRows
+		// cell size
+		this.cellSize = opts.cellSize || 25;
+
+		// memory cells list and noise 'activity' map
+		this.cells = [];
+		this.noiseMap = null;
+
+		// grid config
+		this.grid = {
+			maxCells: null,
+			maxCols: null,
+			maxRows: null
 		};
+
+		// animation options
+		// 0 = full memory (default)
+		// 1 = single memory
+		this.updateMode = opts.updateMode || 0;
+
+		// _init
+		this.boot();
 	};
 
 	//
-	// build FULL memory helper
+	//	Memory.boot()
+	//	kick start memory conciousness
 	//
-	var _buildFullMemory = function(cellSize, cellsCount) {
-		if (!cellSize || !cellsCount) {
-			console.log('cell size&count: ', cellSize, cellsCount);
-			throw new Error('Need cell size & count bro!');
-		}
+	Memory.prototype.boot = function() {
+		console.log('[memory.boot] booting...');
+		console.log(' ');
 
-		// console.log('Building memory of ', cellsCount, ' cells...');
+		// create full memory
+		this.build();
 
-		var memoryData = [];
-		for (var i = 0; i < cellsCount; i++) {
-			memoryData.push({
-				id: i,
-				name: 'memory' + i,
-				size: cellSize,
-				query: helpers.getRandomChar()
+		// add noise to memory cells
+		this.generateNoise();
+	};
+
+	//
+	//	Memory.build()
+	//	build memory
+	//
+	Memory.prototype.build = function() {
+		// get/update max grid sizes
+		this.updateGridSize();
+
+		// build cells grid
+		var newCells = [];
+
+		for (var i = 0; i < this.grid.maxCells; i++) {
+			newCells.push({
+				id: 'cell_' + i,
+				name: 'cell #' + i,
+				size: this.cellSize,
+				query: helpers.getRandomChar(),
+				noise: null
 			});
 		}
 
-		return memoryData;
+		// update model cells list
+		this.cells = newCells;
 	};
 
 	//
-	// build SINGLE memory helper
+	//	Memory.generateNoise()
+	//	generate noise map and apply to memory cells
 	//
-	var _buildSingleMemory = function() {
-		// console.log('Building single memory...');
+	Memory.prototype.generateNoise = function() {
+		console.log('[memory.noise] generating noise map...');
 
-		// return random memory query & color
+		if (!this.cells.length) {
+			throw new Error('No Memory cells, bro.');
+		}
+
+		// reset noise map
+		this.noiseMap = new Noise(Math.random());
+
+		// add noise to memory cells
+		this.cells.forEach(function(memoryCell, idx) {
+			var cellPosition = this.getCellGridPosition(idx);
+			memoryCell.noise = this.getCellNoise(cellPosition);
+		}.bind(this));
+	};
+
+	//
+	//	Memory.updateGridSize()
+	//	calculate grid size based on get max grid sizes
+	//
+	Memory.prototype.updateGridSize = function() {
+		// grab screen max details
+		var screen = this.getMaxScreenCells(this.cellSize);
+
+		// update memory grid config
+		this.grid.maxCells = screen.maxCells;
+		this.grid.maxCols = screen.maxCols;
+		this.grid.maxRows = screen.maxRows;
+	};
+
+	//
+	//	Memory.getMaxScreenCells
+	//	get max number of cells, cols and rows available on screen
+	//	based on cell size
+	//
+	Memory.prototype.getMaxScreenCells = function(cellSize) {
+		// get grid max cols and rows
+		var maxCols = Math.floor(window.innerWidth / cellSize);
+		var maxRows = Math.floor(window.innerHeight / cellSize);
+
+		// total number of cells
+		var maxCells = maxCols * maxRows;
+
 		return {
-			query: helpers.getRandomChar()
+			maxCells: maxCells,
+			maxCols: maxCols,
+			maxRows: maxRows
 		};
 	};
 
-	// expose
-	return {
-		getCellsCount: _getCellsCount,
-		createSingleMemory: _buildSingleMemory,
-		createFullMemory: _buildFullMemory
+	//
+	//	Memory.getCellGridPosition(cellIndex)
+	//	get col and row numbers for cell at array index position
+	//
+	Memory.prototype.getCellGridPosition = function(cellId) {
+		var rowIndex = null;
+		var colIndex = null;
+
+		// find row index
+		for (var currentRow = 1; currentRow <= this.grid.maxRows; currentRow++) {
+			var max = currentRow * this.grid.maxCols;
+
+			if (cellId < max) {
+				rowIndex = currentRow;
+				break;
+			}
+		}
+
+		// find col index
+		colIndex = cellId - (this.grid.maxCols * (rowIndex - 1));
+
+		return {
+			colIndex: colIndex,
+			rowIndex: rowIndex
+		};
 	};
+
+	//
+	//	Memory.getCellNoise(cellPosition)
+	//	get cell noise percent value
+	//
+	Memory.prototype.getCellNoise = function(cellPosition) {
+		var noise = this.noiseMap;
+
+		var cellValue = noise.perlin2(cellPosition.colIndex / 15, cellPosition.rowIndex / 15);
+		var cellPercent = Math.floor(((cellValue + 1) / 2) * 100);
+
+		return cellPercent;
+	};
+
+	//
+	//	Memory.updateSingleCell(cellIndex)
+	//	update memory cell at index no. or a random one
+	//
+	Memory.prototype.updateSingleCell = function(cellIndex) {
+		// grab random memory cell index if none given
+		if (!cellIndex) {
+			cellIndex = Math.floor(Math.random() * this.cells.length);
+		}
+
+		// grab cell
+		var cell = this.cells[cellIndex];
+
+		// generate random memory 'query'
+		cell.query = helpers.getRandomChar();
+	};
+
+	//
+	//	Memory.updateMultiCells()
+	//	update multiple random memory cells
+	//
+	Memory.prototype.updateMultiCells = function() {
+		var maxCells = parseInt(this.cells.length / 5);
+		var cellsToUpdate = ~~(Math.random() * maxCells) + 1;
+
+		// console.log('!! updating multiple memories ', maxCells, cellsToUpdate);
+
+		for (var i = 0; i <= cellsToUpdate; i++) {
+			this.updateSingleCell();
+		}
+	};
+
+	//
+	//	Memory.update()
+	//	update memory cells loop
+	//
+	Memory.prototype.update = function() {
+		if (this.updateMode) {
+			this.updateSingleCell();
+		} else {
+			this.updateMultiCells();
+		}
+
+		// this.generateNoise();
+	};
+
+	// expose
+	return Memory;
 });
