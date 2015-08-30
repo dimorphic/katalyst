@@ -26,7 +26,9 @@ gulp.task('js:transform', function() {
 
 	// stream SCSS
 	var stream = gulp.src(input)
-	.pipe(babel())
+	.pipe(babel({
+		ignore: [CONFIG.paths.js.vendor]
+	}))
 	.pipe(gulp.dest(output));
 
 	// signal task done
