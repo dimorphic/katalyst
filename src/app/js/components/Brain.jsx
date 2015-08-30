@@ -73,6 +73,7 @@ define(function(require){
 		componentWillMount: function() {
 			// create new memory
 			var newMemory = new Memory({
+				// cellSize: 30,
 				updateMode: this.animation.updateMode
 			});
 
