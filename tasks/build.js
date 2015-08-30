@@ -7,7 +7,7 @@ var runSequence = require('run-sequence');
 //
 // BUILD:DEV task
 //
-gulp.task('build:dev', ['clear:terminal', 'browser:serve', 'watch'], function(cb) {
+gulp.task('build:dev', ['clear:terminal', 'watch'], function(cb) {
 	runSequence(
 		'clean',
 		'copy:dependencies',
@@ -16,6 +16,7 @@ gulp.task('build:dev', ['clear:terminal', 'browser:serve', 'watch'], function(cb
 		  'js:dev',
 		  'copy'
 		],
+		'browser:serve',
 	cb);
 });
 
