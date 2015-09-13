@@ -4,12 +4,20 @@ define(function(require){
 	// deps
 	var React = require('react');
 	var helpers = require('helpers');
+	var stats = require('stats');
 
 	// models
 	var Memory = require('models/Memory');
 
 	// components
 	var Braincell = require('components/Braincell');
+
+	// stats meter trackers
+	var debugMeters = true;
+
+	var fpsMeter,
+		msMeter,
+		mbMeter = null;
 
 	//
 	//	Animation MIXIN
@@ -18,7 +26,7 @@ define(function(require){
 		// animation options
 		animation: {
 			// play with this!
-			randomizeMemoryNoise: 1, // randomize memory activity?
+			alive: 1, // brain is 'alive' (randomize memory activity) ?
 			updateMode: 0,		// 0 - full memory
 								// 1 - single memory
 
@@ -48,17 +56,32 @@ define(function(require){
 		redraw: function() {
 			// console.log('redraw!');
 
+			// benchmark start
+			if (debugMeters) {
+				fpsMeter.begin();
+				msMeter.begin();
+				mbMeter.begin();
+			}
+
+			// update & render
+			this.update();
+
+			// benchmark end
+			if (debugMeters) {
+				fpsMeter.end();
+				msMeter.end();
+				mbMeter.end();
+			}
+
 			// request another frame?
 			if (this.animation.useRAF) {
 				this.animation.updateTimer = window.requestAnimFrame(this.redraw);
 			}
-
-			this.update();
 		}
 	};
 
 	//
-	// Brain component
+	//	Brain component
 	//
 	var Brain = React.createClass({
 		mixins: [animMixin],
@@ -71,12 +94,20 @@ define(function(require){
 		},
 
 		componentWillMount: function() {
+			// create benchmark meters
+			if (debugMeters) {
+				fpsMeter = stats.createMeter('fps', { top: 0, left: 0 });
+				msMeter = stats.createMeter('ms', { top: 0, left: 80 });
+				mbMeter = stats.createMeter('mb', { top: 0, left: 160 });
+			}
+
 			// create new memory
 			var newMemory = new Memory({
 				// cellSize: 30,
 				updateMode: this.animation.updateMode
 			});
 
+			// set new memory
 			this.setState({
 				memory: newMemory
 			});
@@ -94,7 +125,7 @@ define(function(require){
 			}
 
 			// randomize memory activity
-			if (this.animation.randomizeMemoryNoise) {
+			if (this.animation.alive) {
 				setInterval(function() {
 					this.state.memory.generateNoise();
 				}.bind(this), 6600);
@@ -125,7 +156,6 @@ define(function(require){
 						<Braincell key={cell.name}
 									size={cell.size}
 									query={cell.query}
-									color={cell.color}
 									noise={cell.noise} />
 					);
 				});
