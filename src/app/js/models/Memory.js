@@ -2,7 +2,7 @@ define(function(require){
 	'use strict';
 
 	// deps
-	var helpers = require('helpers');
+	var helpers = require('common/helpers');
 	var Noise = require('noise');
 
 	//

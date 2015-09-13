@@ -3,8 +3,8 @@ define(function(require){
 
 	// deps
 	var React = require('react');
-	var helpers = require('helpers');
-	var stats = require('stats');
+	var helpers = require('common/helpers');
+	var stats = require('common/stats');
 
 	// models
 	var Memory = require('models/Memory');
