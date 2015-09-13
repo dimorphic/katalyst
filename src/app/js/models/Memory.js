@@ -79,7 +79,7 @@ define(function(require){
 	//	generate noise map and apply to memory cells
 	//
 	Memory.prototype.generateNoise = function() {
-		console.log('[memory.noise] generating noise map...');
+		// console.log('[memory.noise] generating noise map...');
 
 		if (!this.cells.length) {
 			throw new Error('No Memory cells, bro.');
