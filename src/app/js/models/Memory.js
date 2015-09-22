@@ -82,15 +82,17 @@ define(function(require){
 	//	Memory.generateNoise()
 	//	generate noise map and apply to memory cells
 	//
-	Memory.prototype.generateNoise = function() {
+	Memory.prototype.generateNoise = function(seed) {
 		console.log('[Memory] generating noise map...');
 
 		if (!this.cells.length) {
 			throw new Error('No Memory cells, bro.');
 		}
 
+		seed = seed || Math.random();
+
 		// reset noise map
-		this.noiseMap = new Noise(Math.random());
+		this.noiseMap = new Noise(seed);
 
 		// add noise to memory cells
 		this.cells.forEach(function(memoryCell, idx) {
