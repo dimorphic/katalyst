@@ -85,9 +85,7 @@ define(function(require){
 	//	Brain dream memory
 	//
 	Brain.prototype.dream = function() {
-		console.log('[Brain] Dreaming ', this.memory.cells.length, ' cells...');
-
-		// this.paintGrid();
+		// console.log('[Brain] Dreaming ', this.memory.cells.length, ' cells...');
 
 		// start animation (rebuild memory)
 		if (this.animation.useRAF) {
@@ -100,7 +98,7 @@ define(function(require){
 		// if (this.animation.alive) {
 		// 	setInterval(function() {
 		// 		this.memory.generateNoise();
-		// 	}.bind(this), 6600);
+		// 	}.bind(this), 2000);
 		// }
 	};
 
@@ -122,29 +120,43 @@ define(function(require){
 		this.ctx.stroke();
 	};
 
-	Brain.prototype.paintCell = function(brainCell) {
+	Brain.prototype.paintCell = function(cell) {
 		// start new path
 		this.ctx.beginPath();
 
-		this.ctx.rect(brainCell.x, brainCell.y, brainCell.size, brainCell.size);
+		// draw rectangle
+		this.ctx.rect(cell.x, cell.y, cell.size, cell.size);
 
 		// fill it
-		this.ctx.fillStyle = brainCell.fill.bgColor;
+		this.ctx.fillStyle = cell.fill.bgColor;
 		this.ctx.fill();
+
+		// draw text
+		this.ctx.font = '14px Exo';
+		this.ctx.textBaseline = 'middle';
+
+		var textX = cell.x + (cell.size / 2) - (this.ctx.measureText(cell.query).width / 2);
+		var textY = cell.y + (cell.size / 2);
+
+		this.ctx.fillStyle = cell.fill.textColor;
+		this.ctx.fillText(cell.query, textX, textY);
 	};
 
 	//
 	//
 	//
 	Brain.prototype.update = function() {
-		console.log('[Brain] Updating memory...');
+		// console.log('[Brain] Updating memory...');
+
+		// update memory
+		this.memory.update();
 	};
 
 	Brain.prototype.draw = function() {
-		console.log('[Brain] Draw memory...');
+		// console.log('[Brain] Draw memory...');
 
 		// clear canvas
-		// this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
 		// #debug
 		for (var idx = 0; idx < this.memory.cells.length; idx++) {
@@ -157,15 +169,15 @@ define(function(require){
 	//
 	//
 	Brain.prototype.render = function() {
-		console.log('[Brain] Render...');
+		// console.log('[Brain] Render...');
 
 		// request another frame?
-		// if (this.animation.useRAF) {
-		// 	this.animation.updateTimer = window.requestAnimFrame(this.render.bind(this));
-		// }
+		if (this.animation.useRAF) {
+			this.animation.updateTimer = window.requestAnimFrame(this.render.bind(this));
+		}
 
 		// update
-		// this.update();
+		this.update();
 
 		// render
 		this.draw();
