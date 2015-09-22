@@ -3,13 +3,19 @@ define(function(require){
 
 	// deps
 	var $ = require('jquery');
-	var React = require('react');
 
 	// components
 	var Brain = require('components/Brain');
 
 	// DOM ready
 	$(function() {
-		React.render(<Brain />, document.getElementById('app'));
+		var $bttn = $('#boot');
+
+		// initialize Brain
+		var app = new Brain('#app');
+
+		$bttn.on('click', function() {
+			app.memory.generateNoise();
+		});
 	});
 });
