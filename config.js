@@ -22,7 +22,6 @@ CONFIG.deps = {
 		'src/vendor/requirejs/require.js',
         'src/vendor/jquery/dist/jquery.js',
 
-		'src/vendor/react/react.js',
 		'src/vendor/noisejs/index.js',
 
 		'src/vendor/stats.js/build/stats.min.js'

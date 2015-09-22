@@ -4,9 +4,6 @@ require.config({
     // alias libraries paths.  Must set 'angular'
     paths: {
 		'jquery': 'vendor/jquery',
-
-        // 'angular': '//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min'
-        'react': 'vendor/react',
         'noise': 'vendor/index',
 
         'statsjs': 'vendor/stats.min'
