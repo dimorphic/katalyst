@@ -2,32 +2,37 @@ define(function(require){
 	'use strict';
 
 	// deps
-	var $ = require('jquery');
 	var helpers = require('common/helpers');
 	var stats = require('common/stats');
 
 	// model
 	var Memory = require('models/Memory');
 
-	// performance stats meters
+	// #DEBUG: do you even lift, bro?
 	var benchmark = true;
 
-	var fpsMeter = stats.createMeter('fps', { top: 0, left: 0 }),
+	// performance stats meters
+	var fpsMeter, msMeter = null;
+
+	if (benchmark) {
+		fpsMeter = stats.createMeter('fps', { top: 0, left: 0 });
 		msMeter = stats.createMeter('ms', { top: 0, left: 80 });
+	}
 
 	//
-	//	HAL
+	//	Brain
 	//
 	var Brain = function(element) {
 		this.canvas = null;
 		this.memory = null;
 
 		this.cells = [];
+		this.busy = false;
 
-		// animation options
+		// options
 		this.animation = {
 			// play with this!
-			alive: 0, // brain is 'alive' (randomize memory activity) ?
+			alive: 1, // brain is 'alive' (randomize memory activity) ?
 			updateMode: 0,		// 0 - full memory
 								// 1 - single memory
 
@@ -52,7 +57,6 @@ define(function(require){
 		// setup & attach to canvas
 		this.attach(element);
 
-		// #debug
 		// create new Memory
 		this.memory = new Memory({ updateMode: this.animation.updateMode });
 
@@ -61,7 +65,7 @@ define(function(require){
 	};
 
 	//
-	//	Brain attach helper
+	//	Brain attach handler
 	//
 	Brain.prototype.attach = function(el) {
 		var cvs = document.querySelector(el);
@@ -85,6 +89,9 @@ define(function(require){
 		window.addEventListener('resize', this.onScreenResize.bind(this));
 	};
 
+	//
+	//	Brain screen resize handler
+	//
 	Brain.prototype.onScreenResize = function() {
 		console.log('[Brain] screen resize!', this.memory.grid.maxCells);
 
@@ -105,7 +112,7 @@ define(function(require){
 	};
 
 	//
-	//	Brain dream memory
+	//	Brain animate & dream helper
 	//
 	Brain.prototype.dream = function() {
 		// console.log('[Brain] Dreaming ', this.memory.cells.length, ' cells...');
@@ -119,12 +126,33 @@ define(function(require){
 
 		// randomize memory activity
 		if (this.animation.alive) {
-			setInterval(function() {
-				this.memory.generateNoise();
-			}.bind(this), 2000);
+			this.think();
 		}
 	};
 
+	//
+	//	Brain think / dream helper
+	//
+	Brain.prototype.think = function() {
+		setInterval(function() {
+			// set busy flag, we're transitioning to a new memory
+			this.busy = true;
+
+			// get new memory noise map
+			this.memory.generateNoise();
+
+			// set timeout to remove busy flag
+			// ...and restore context alpha
+			setTimeout(function() {
+				this.busy = false;
+				this.ctx.globalAlpha = 1;
+			}.bind(this), 1000);
+		}.bind(this), 5000);
+	};
+
+	//
+	//	Brain paint GRID debug helper (#TODO: remove?)
+	//
 	Brain.prototype.paintGrid = function() {
 		// draw vertical lines
 		for (var x = 0.5; x < this.canvas.width; x += this.memory.cellSize) {
@@ -143,7 +171,14 @@ define(function(require){
 		this.ctx.stroke();
 	};
 
+	//
+	//	Brain paint brain cell helper
+	//
 	Brain.prototype.paintCell = function(cell) {
+		if (this.busy) {
+			this.ctx.globalAlpha = Math.random().toFixed(2);
+		}
+
 		// start new path
 		this.ctx.beginPath();
 
@@ -163,7 +198,7 @@ define(function(require){
 	};
 
 	//
-	//
+	//	Brain update handler
 	//
 	Brain.prototype.update = function() {
 		// console.log('[Brain] Updating memory...');
@@ -172,21 +207,25 @@ define(function(require){
 		this.memory.update();
 	};
 
+	//
+	//	Brain draw handler
+	//
 	Brain.prototype.draw = function() {
 		// console.log('[Brain] Draw memory...');
 
 		// clear canvas
-		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		if (!this.busy) {
+			this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		}
 
 		// draw brain cells / memory
 		for (var idx = 0; idx < this.memory.cells.length; idx++) {
-			var cell = this.memory.cells[idx];
-			this.paintCell(cell);
+			this.paintCell(this.memory.cells[idx]);
 		}
 	};
 
 	//
-	//
+	//	Brain render handler
 	//
 	Brain.prototype.render = function() {
 		// console.log('[Brain] Render...', this.animation);
@@ -205,7 +244,7 @@ define(function(require){
 		// update
 		this.update();
 
-		// render
+		// draw
 		this.draw();
 
 		// benchmark end
