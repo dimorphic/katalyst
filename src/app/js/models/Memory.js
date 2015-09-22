@@ -243,7 +243,7 @@ define(function(require){
 	//	update multiple random memory cells
 	//
 	Memory.prototype.updateMultiCells = function() {
-		var maxCells = parseInt(this.cells.length / 5);
+		var maxCells = parseInt(this.cells.length / 5, 10);
 		var cellsToUpdate = ~~(Math.random() * maxCells) + 1;
 
 		for (var i = 0; i <= cellsToUpdate; i++) {
