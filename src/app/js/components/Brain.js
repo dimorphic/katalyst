@@ -75,6 +75,9 @@ define(function(require){
 		this.canvas = cvs;
 		this.ctx = cvs.getContext('2d');
 
+		// set composite operation
+		// this.ctx.globalCompositeOperation = 'lighter';
+
 		// handle window resize
 		window.addEventListener('resize', this.onScreenResize.bind(this));
 	};
@@ -112,11 +115,11 @@ define(function(require){
 		}
 
 		// randomize memory activity
-		// if (this.animation.alive) {
-		// 	setInterval(function() {
-		// 		this.memory.generateNoise();
-		// 	}.bind(this), 2000);
-		// }
+		if (this.animation.alive) {
+			setInterval(function() {
+				this.memory.generateNoise();
+			}.bind(this), 2000);
+		}
 	};
 
 	Brain.prototype.paintGrid = function() {
@@ -141,12 +144,9 @@ define(function(require){
 		// start new path
 		this.ctx.beginPath();
 
-		// draw rectangle
-		this.ctx.rect(cell.x, cell.y, cell.size, cell.size);
-
-		// fill it
+		// set color and draw rect
 		this.ctx.fillStyle = cell.fill.bgColor;
-		this.ctx.fill();
+		this.ctx.fillRect(cell.x, cell.y, cell.size, cell.size);
 
 		// draw text
 		this.ctx.font = '14px Exo';
