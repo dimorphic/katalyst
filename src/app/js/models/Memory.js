@@ -233,7 +233,7 @@ define(function(require){
 
 		// generate random memory 'query'
 		cell.query = helpers.getRandomChar();
-		// cell.fill = this.getCellColor(cell.noise);
+		cell.fill = this.getCellColor(cell.noise);
 	};
 
 	//
