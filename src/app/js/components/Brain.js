@@ -4,16 +4,18 @@ define(function(require){
 	// deps
 	var $ = require('jquery');
 	var helpers = require('common/helpers');
+	var stats = require('common/stats');
 
 	// model
 	var Memory = require('models/Memory');
+
+	// performance
+	var FPSmon = stats.createMeter('fps', { top: 0, left: 0 });
 
 	//
 	//	HAL
 	//
 	var Brain = function(element) {
-		// if (!opts) { opts = {}; }
-
 		this.canvas = null;
 		this.memory = null;
 
@@ -74,11 +76,26 @@ define(function(require){
 		this.ctx = cvs.getContext('2d');
 
 		// handle window resize
-		window.addEventListener('resize', this.onScreenResize);
+		window.addEventListener('resize', this.onScreenResize.bind(this));
 	};
 
 	Brain.prototype.onScreenResize = function() {
-		console.log('[Brain] screen resize!');
+		console.log('[Brain] screen resize!', this.memory.grid.maxCells);
+
+		// cancel animation
+		if (this.animation.useRAF) {
+			window.cancelRequestAnimFrame(this.animation.updateTimer);
+		} else {
+			clearInterval(this.animation.updateTimer);
+		}
+
+		// reboot memory
+		this.memory.boot();
+
+		// restart dream / animation
+		setTimeout(function() {
+			this.dream();
+		}.bind(this), 300);
 	};
 
 	//
@@ -87,9 +104,9 @@ define(function(require){
 	Brain.prototype.dream = function() {
 		// console.log('[Brain] Dreaming ', this.memory.cells.length, ' cells...');
 
-		// start animation (rebuild memory)
+		// start animation
 		if (this.animation.useRAF) {
-			this.render();
+			this.animation.updateTimer = window.requestAnimFrame(this.render.bind(this));
 		} else {
 			this.animation.updateTimer = setInterval(this.render, this.animation.updateDelay);
 		}
@@ -169,18 +186,22 @@ define(function(require){
 	//
 	//
 	Brain.prototype.render = function() {
-		// console.log('[Brain] Render...');
+		// console.log('[Brain] Render...', this.animation);
 
 		// request another frame?
 		if (this.animation.useRAF) {
 			this.animation.updateTimer = window.requestAnimFrame(this.render.bind(this));
 		}
 
+		FPSmon.begin();
+
 		// update
 		this.update();
 
 		// render
 		this.draw();
+
+		FPSmon.end();
 	};
 
 	// expose
