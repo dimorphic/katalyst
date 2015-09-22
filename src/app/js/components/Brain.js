@@ -9,8 +9,11 @@ define(function(require){
 	// model
 	var Memory = require('models/Memory');
 
-	// performance
-	var FPSmon = stats.createMeter('fps', { top: 0, left: 0 });
+	// performance stats meters
+	var benchmark = true;
+
+	var fpsMeter = stats.createMeter('fps', { top: 0, left: 0 }),
+		msMeter = stats.createMeter('ms', { top: 0, left: 80 });
 
 	//
 	//	HAL
@@ -24,7 +27,7 @@ define(function(require){
 		// animation options
 		this.animation = {
 			// play with this!
-			alive: 1, // brain is 'alive' (randomize memory activity) ?
+			alive: 0, // brain is 'alive' (randomize memory activity) ?
 			updateMode: 0,		// 0 - full memory
 								// 1 - single memory
 
@@ -51,7 +54,7 @@ define(function(require){
 
 		// #debug
 		// create new Memory
-		this.memory = new Memory({ updateMode: 0 });
+		this.memory = new Memory({ updateMode: this.animation.updateMode });
 
 		// go dream
 		this.dream();
@@ -175,7 +178,7 @@ define(function(require){
 		// clear canvas
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-		// #debug
+		// draw brain cells / memory
 		for (var idx = 0; idx < this.memory.cells.length; idx++) {
 			var cell = this.memory.cells[idx];
 			this.paintCell(cell);
@@ -193,7 +196,11 @@ define(function(require){
 			this.animation.updateTimer = window.requestAnimFrame(this.render.bind(this));
 		}
 
-		FPSmon.begin();
+		// benchmark start
+		if (benchmark) {
+			fpsMeter.begin();
+			msMeter.begin();
+		}
 
 		// update
 		this.update();
@@ -201,7 +208,11 @@ define(function(require){
 		// render
 		this.draw();
 
-		FPSmon.end();
+		// benchmark end
+		if (benchmark) {
+			fpsMeter.end();
+			msMeter.end();
+		}
 	};
 
 	// expose
