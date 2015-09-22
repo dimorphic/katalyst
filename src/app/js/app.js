@@ -15,6 +15,7 @@ define(function(require){
 		var app = new Brain('#app');
 
 		$bttn.on('click', function() {
+			// app.render();
 			app.memory.generateNoise();
 		});
 	});
