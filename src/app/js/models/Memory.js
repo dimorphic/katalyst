@@ -61,12 +61,17 @@ define(function(require){
 		var newCells = [];
 
 		for (var i = 0; i < this.grid.maxCells; i++) {
+			var cellPosition = this.getCellGridPosition(i);
+
 			newCells.push({
 				id: 'cell_' + i,
-				name: 'cell #' + i,
 				size: this.cellSize,
 				query: helpers.getRandomChar(),
-				noise: null
+				noise: null,
+				fill: null,
+
+				x: cellPosition.colIndex * this.cellSize,
+				y: cellPosition.rowIndex * this.cellSize
 			});
 		}
 
@@ -92,6 +97,7 @@ define(function(require){
 		this.cells.forEach(function(memoryCell, idx) {
 			var cellPosition = this.getCellGridPosition(idx);
 			memoryCell.noise = this.getCellNoise(cellPosition);
+			memoryCell.fill = this.getCellColor(memoryCell.noise);
 		}.bind(this));
 	};
 
@@ -102,6 +108,8 @@ define(function(require){
 	Memory.prototype.updateGridSize = function() {
 		// grab screen max details
 		var screen = this.getMaxScreenCells(this.cellSize);
+
+		console.log('screen grid: ', screen);
 
 		// update memory grid config
 		this.grid.maxCells = screen.maxCells;
@@ -157,6 +165,58 @@ define(function(require){
 		var cellPercent = Math.floor(((cellValue + 1) / 2) * 100);
 
 		return cellPercent;
+	};
+
+	//
+	//	Memory.getCellColor(cellNoise)
+	//	get cell color based on noise percent
+	//
+	Memory.prototype.getCellColor = function(noise) {
+		if (!noise) {
+			throw new Error('Need noise, bro!');
+		}
+
+		// snapshot value
+		var val = noise;
+
+		var hue, saturation,
+			lightness, textLightness;
+
+		var randomness = Math.floor(Math.random() * 25);
+
+		// Hue
+		if (val < 70) {
+			hue = 200 + (randomness / 2);
+		} else {
+			hue = 60 - randomness;
+		}
+
+		// Lightness
+		if (val < 50) {
+			lightness = 5;
+		} else {
+			lightness = val / 1.5 - randomness;
+		}
+
+		//Saturation
+		saturation = 90;
+
+		// Text lightness
+		if (val < 45) {
+			textLightness = lightness;
+		} else if (val < 80) {
+			textLightness = lightness + 10;
+		} else {
+			textLightness = lightness - 10;
+		}
+
+		var bgColor = 'hsl(' + hue + ', ' + saturation + '%, ' + lightness + '%)';
+		var textColor = 'hsl(' + hue + ', ' + saturation + '%, ' + textLightness + '%)';
+
+		return {
+			bgColor: bgColor,
+			textColor: textColor
+		};
 	};
 
 	//
