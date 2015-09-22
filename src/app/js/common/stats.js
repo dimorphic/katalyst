@@ -19,12 +19,15 @@ define(function(require){
 			'mb': 2
 		};
 
+		// meter default position if none passed
+		position = position || { top: 0, left: 0};
+
 		// error checks
 		if (!meterType || !position) {
 			throw new Error('Need type (FPS / MS / MB) & position for meter, bro.');
 		}
 
-		if ((typeof METERS[meterType] === 'undefined') || METERS[meterType] === '') {
+		if ((typeof METERS[meterType] === 'undefined')) {
 			throw new Error('Unknown meter type bro.');
 		}
 
