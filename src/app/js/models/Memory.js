@@ -255,10 +255,8 @@ define(function(require){
 	//
 	Memory.prototype.update = function() {
 		if (this.updateMode) {
-			console.log('single!');
 			this.updateSingleCell();
 		} else {
-			console.log('multi!');
 			this.updateMultiCells();
 		}
 	};
