@@ -39,8 +39,7 @@ define(function(require){
 	//	kick start memory conciousness
 	//
 	Memory.prototype.boot = function() {
-		console.log('[memory.boot] booting...');
-		console.log(' ');
+		console.log('[Memory] booting...');
 
 		// create full memory
 		this.build();
@@ -84,7 +83,7 @@ define(function(require){
 	//	generate noise map and apply to memory cells
 	//
 	Memory.prototype.generateNoise = function() {
-		// console.log('[memory.noise] generating noise map...');
+		console.log('[Memory] generating noise map...');
 
 		if (!this.cells.length) {
 			throw new Error('No Memory cells, bro.');
@@ -109,7 +108,7 @@ define(function(require){
 		// grab screen max details
 		var screen = this.getMaxScreenCells(this.cellSize);
 
-		console.log('screen grid: ', screen);
+		// console.log('screen grid: ', screen);
 
 		// update memory grid config
 		this.grid.maxCells = screen.maxCells;
@@ -234,6 +233,7 @@ define(function(require){
 
 		// generate random memory 'query'
 		cell.query = helpers.getRandomChar();
+		// cell.fill = this.getCellColor(cell.noise);
 	};
 
 	//
