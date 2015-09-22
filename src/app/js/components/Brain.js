@@ -32,7 +32,7 @@ define(function(require){
 		// options
 		this.animation = {
 			// play with this!
-			alive: 1, // brain is 'alive' (randomize memory activity) ?
+			alive: 0, // brain is 'alive' (randomize memory activity) ?
 			updateMode: 0,		// 0 - full memory
 								// 1 - single memory
 
@@ -126,28 +126,28 @@ define(function(require){
 
 		// randomize memory activity
 		if (this.animation.alive) {
-			this.think();
+			setInterval(function() {
+				this.think();
+			}.bind(this), 5000);
 		}
 	};
 
 	//
 	//	Brain think / dream helper
 	//
-	Brain.prototype.think = function() {
-		setInterval(function() {
-			// set busy flag, we're transitioning to a new memory
-			this.busy = true;
+	Brain.prototype.think = function(seed) {
+		// set busy flag, we're transitioning to a new memory
+		this.busy = true;
 
-			// get new memory noise map
-			this.memory.generateNoise();
+		// get new memory noise map
+		this.memory.generateNoise(seed);
 
-			// set timeout to remove busy flag
-			// ...and restore context alpha
-			setTimeout(function() {
-				this.busy = false;
-				this.ctx.globalAlpha = 1;
-			}.bind(this), 1000);
-		}.bind(this), 5000);
+		// set timeout to remove busy flag
+		// ...and restore context alpha
+		setTimeout(function() {
+			this.busy = false;
+			this.ctx.globalAlpha = 1;
+		}.bind(this), 1000);
 	};
 
 	//
