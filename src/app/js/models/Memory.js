@@ -31,15 +31,15 @@ define(function(require){
 		this.updateMode = opts.updateMode || 0;
 
 		// _init
-		this.boot();
+		this.boot(opts);
 	};
 
 	//
 	//	Memory.boot()
 	//	kick start memory conciousness
 	//
-	Memory.prototype.boot = function() {
-		console.log('[Memory] booting...');
+	Memory.prototype.boot = function(opts) {
+		console.log('[Memory] booting...', opts);
 
 		// create full memory
 		this.build();
@@ -225,7 +225,7 @@ define(function(require){
 	Memory.prototype.updateSingleCell = function(cellIndex) {
 		// grab random memory cell index if none given
 		if (!cellIndex) {
-			cellIndex = Math.floor(Math.random() * this.cells.length);
+			cellIndex = ~~(Math.random() * this.cells.length);
 		}
 
 		// grab cell
@@ -244,8 +244,6 @@ define(function(require){
 		var maxCells = parseInt(this.cells.length / 5);
 		var cellsToUpdate = ~~(Math.random() * maxCells) + 1;
 
-		// console.log('!! updating multiple memories ', maxCells, cellsToUpdate);
-
 		for (var i = 0; i <= cellsToUpdate; i++) {
 			this.updateSingleCell();
 		}
@@ -257,12 +255,12 @@ define(function(require){
 	//
 	Memory.prototype.update = function() {
 		if (this.updateMode) {
+			console.log('single!');
 			this.updateSingleCell();
 		} else {
+			console.log('multi!');
 			this.updateMultiCells();
 		}
-
-		// this.generateNoise();
 	};
 
 	// expose
