@@ -175,6 +175,7 @@ define(function(require){
 	//	Brain paint brain cell helper
 	//
 	Brain.prototype.paintCell = function(cell) {
+		// if (~~(Math.random() * 2)) {
 		if (this.busy) {
 			this.ctx.globalAlpha = Math.random().toFixed(2);
 		}
