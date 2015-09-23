@@ -12,7 +12,7 @@ define(function(require){
 		if (!opts) { opts = {}; }
 
 		// cell size
-		this.cellSize = opts.cellSize || 25;
+		this.cellSize = opts.cellSize || 30;
 
 		// memory cells list and noise 'activity' map
 		this.cells = [];
@@ -83,7 +83,7 @@ define(function(require){
 	//	generate noise map and apply to memory cells
 	//
 	Memory.prototype.generateNoise = function(seed) {
-		console.log('[Memory] generating noise map...');
+		// console.log('[Memory] generating noise map...', seed);
 
 		if (!this.cells.length) {
 			throw new Error('No Memory cells, bro.');
