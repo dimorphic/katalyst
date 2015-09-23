@@ -24,7 +24,8 @@ CONFIG.deps = {
 
 		'src/vendor/noisejs/index.js',
 
-		'src/vendor/stats.js/build/stats.min.js'
+		'src/vendor/stats.js/build/stats.min.js',
+		'src/vendor/annyang/annyang.js'
 	]
 };
 

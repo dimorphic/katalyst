@@ -6,7 +6,8 @@ require.config({
 		'jquery': 'vendor/jquery',
         'noise': 'vendor/index',
 
-        'statsjs': 'vendor/stats.min'
+        'statsjs': 'vendor/stats.min',
+        'annyang': 'vendor/annyang'
     },
 
     // Add angular modules that does not support AMD out of the box, put it in a shim
