@@ -201,8 +201,6 @@ define(function(require){
 		} else {
 			this.updateMultiCells();
 		}
-
-		// this.generateNoise();
 	};
 
 	// expose
