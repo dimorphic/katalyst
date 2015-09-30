@@ -35,7 +35,7 @@
     "gulp-size": "^1.2.1",
     "gulp-uglify": "^1.2.0",
     "gulp-util": "*",
-    "lodash": "*",
+    "lodash": "^3.9.3",
     "q": "^1.4.1",
     "require-dir": "*",
     "run-sequence": "*",
