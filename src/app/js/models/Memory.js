@@ -256,11 +256,13 @@ define(function(require){
 	//	update memory cells loop
 	//
 	Memory.prototype.update = function() {
+		console.time('Update memory');
 		if (this.updateMode) {
 			this.updateSingleCell();
 		} else {
 			this.updateMultiCells();
 		}
+		console.timeEnd('Update memory');
 	};
 
 	// expose
