@@ -12,7 +12,7 @@ define(function(require){
 		if (!opts) { opts = {}; }
 
 		// cell size
-		this.cellSize = opts.cellSize || 25;
+		this.cellSize = opts.cellSize || 30;
 
 		// memory cells list and noise 'activity' map
 		this.cells = [];
@@ -133,22 +133,12 @@ define(function(require){
 	//	Memory.getCellGridPosition(cellIndex)
 	//	get col and row numbers for cell at array index position
 	//
-	Memory.prototype.getCellGridPosition = function(cellId) {
+	Memory.prototype.getCellGridPosition = function(cellIndex) {
 		var rowIndex = null;
 		var colIndex = null;
 
-		// find row index
-		for (var currentRow = 1; currentRow <= this.grid.maxRows; currentRow++) {
-			var max = currentRow * this.grid.maxCols;
-
-			if (cellId < max) {
-				rowIndex = currentRow;
-				break;
-			}
-		}
-
-		// find col index
-		colIndex = cellId - (this.grid.maxCols * (rowIndex - 1));
+		rowIndex = Math.floor(cellIndex / this.grid.maxCols);
+		colIndex = Math.ceil(cellIndex % this.grid.maxCols);
 
 		return {
 			colIndex: colIndex,
@@ -176,7 +166,7 @@ define(function(require){
 	Memory.prototype.updateSingleCell = function(cellIndex) {
 		// grab random memory cell index if none given
 		if (!cellIndex) {
-			cellIndex = Math.floor(Math.random() * this.cells.length);
+			cellIndex = ~~(Math.random() * this.cells.length);
 		}
 
 		// grab cell
@@ -191,7 +181,7 @@ define(function(require){
 	//	update multiple random memory cells
 	//
 	Memory.prototype.updateMultiCells = function() {
-		var maxCells = parseInt(this.cells.length / 5);
+		var maxCells = parseInt(this.cells.length / 5, 10);
 		var cellsToUpdate = ~~(Math.random() * maxCells) + 1;
 
 		// console.log('!! updating multiple memories ', maxCells, cellsToUpdate);
