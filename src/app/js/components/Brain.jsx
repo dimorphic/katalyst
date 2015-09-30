@@ -116,7 +116,7 @@ define(function(require){
 
 			// start animation (rebuild memory)
 			if (this.animation.useRAF) {
-				this.redraw();
+				this.animation.updateTimer = window.requestAnimFrame(this.redraw);
 			} else {
 				this.animation.updateTimer = setInterval(this.redraw, this.animation.updateDelay);
 			}
