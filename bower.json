@@ -28,9 +28,10 @@
     "tests"
   ],
   "dependencies": {
-    "requirejs": "~2.1.18",
     "jquery": "~2.1.4",
+    "noisejs": "*",
     "react": "~0.13.3",
+    "requirejs": "~2.1.18",
     "stats.js": "*"
   }
 }
