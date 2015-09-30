@@ -73,7 +73,7 @@ define(function(require){
 			var style = {
 				width: this.props.size,
 				height: this.props.size,
-				fontSize: (this.props.size * 0.7),
+				fontSize: (this.props.size * 0.5),
 
 				color: cellColor.textColor,
 				backgroundColor: cellColor.bgColor || ''
