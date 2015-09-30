@@ -30,6 +30,7 @@
   "dependencies": {
     "annyang": "~2.0.0",
     "jquery": "~2.1.4",
+    "noisejs": "*",
     "requirejs": "~2.1.18",
     "stats.js": "*"
   }
