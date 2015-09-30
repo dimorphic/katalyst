@@ -27,6 +27,8 @@ define(function(require){
 		}
 	};
 
+	Ear.addCommands(COMMANDS);
+
 	// #debug
 	Ear.addCallback('resultMatch', function(userSaid, cmdText, phrases) {
 		console.log('user said:', userSaid, '(', cmdText, ')');
@@ -45,8 +47,7 @@ define(function(require){
 			// app.render();
 			// app.think(68097118101);
 			// #debug: init Ear
-			Ear.start({ autoRestart: true, continuous: true });
-			Ear.addCommands(COMMANDS);
+			Ear.start({ autoRestart: false, continuous: true });
 		});
 	});
 });
