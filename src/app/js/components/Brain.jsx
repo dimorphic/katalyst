@@ -12,12 +12,17 @@ define(function(require){
 	// components
 	var Braincell = require('components/Braincell');
 
-	// stats meter trackers
-	var debugMeters = true;
+	// #DEBUG: do you even lift, bro?
+	var benchmark = true;
 
-	var fpsMeter,
-		msMeter,
-		mbMeter = null;
+	// performance stats meters
+	var fpsMeter, msMeter, mbMeter = null;
+
+	if (benchmark) {
+		fpsMeter = stats.createMeter('fps', { top: 0, left: 0 });
+		msMeter = stats.createMeter('ms', { top: 0, left: 80 });
+		mbMeter = stats.createMeter('mb', { top: 0, left: 160 });
+	}
 
 	//
 	//	Animation MIXIN
@@ -56,8 +61,13 @@ define(function(require){
 		redraw: function() {
 			// console.log('redraw!');
 
+			// request another frame?
+			if (this.animation.useRAF) {
+				this.animation.updateTimer = window.requestAnimFrame(this.redraw);
+			}
+
 			// benchmark start
-			if (debugMeters) {
+			if (benchmark) {
 				fpsMeter.begin();
 				msMeter.begin();
 				mbMeter.begin();
@@ -67,15 +77,10 @@ define(function(require){
 			this.update();
 
 			// benchmark end
-			if (debugMeters) {
+			if (benchmark) {
 				fpsMeter.end();
 				msMeter.end();
 				mbMeter.end();
-			}
-
-			// request another frame?
-			if (this.animation.useRAF) {
-				this.animation.updateTimer = window.requestAnimFrame(this.redraw);
 			}
 		}
 	};
@@ -94,16 +99,8 @@ define(function(require){
 		},
 
 		componentWillMount: function() {
-			// create benchmark meters
-			if (debugMeters) {
-				fpsMeter = stats.createMeter('fps', { top: 0, left: 0 });
-				msMeter = stats.createMeter('ms', { top: 0, left: 80 });
-				mbMeter = stats.createMeter('mb', { top: 0, left: 160 });
-			}
-
 			// create new memory
 			var newMemory = new Memory({
-				// cellSize: 30,
 				updateMode: this.animation.updateMode
 			});
 
