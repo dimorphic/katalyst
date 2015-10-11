@@ -150,10 +150,11 @@ define(function(require){
 
 				brainCells = memory.cells.map(function(cell) {
 					return (
-						<Braincell key={cell.name}
+						<Braincell key={cell.id}
 									size={cell.size}
 									query={cell.query}
-									noise={cell.noise} />
+									noise={cell.noise}
+									fill={cell.fill} />
 					);
 				});
 
