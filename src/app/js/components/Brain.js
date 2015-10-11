@@ -173,6 +173,22 @@ define(function(require){
 	};
 
 	//
+	//	Brain paint cells count helper
+	//
+	Brain.prototype.paintCounter = function() {
+		this.ctx.font = '14px Exo';
+		this.ctx.textBaseline = 'middle';
+
+		var textCells = this.memory.cells.length;
+		var textSize = this.ctx.measureText(textCells);
+		var textX = (this.canvas.width - textSize.width) - 20;
+		var textY = (this.canvas.height - textSize.width) - 20;
+
+		this.ctx.fillStyle = '#fff';
+		this.ctx.fillText(textCells, textX, textY);
+	};
+
+	//
 	//	Brain paint brain cell helper
 	//
 	Brain.prototype.paintCell = function(cell) {
@@ -225,6 +241,9 @@ define(function(require){
 			var randomCell = ~~(Math.random() * this.memory.cells.length);
 			this.paintCell(this.memory.cells[randomCell]);
 		}
+
+		// draw cell stats
+		// this.paintCounter();
 	};
 
 	//
