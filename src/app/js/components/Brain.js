@@ -33,7 +33,7 @@ define(function(require){
 		// options
 		this.animation = {
 			// play with this!
-			alive: 0, // brain is 'alive' (randomize memory activity) ?
+			alive: 1, // brain is 'alive' (randomize memory activity) ?
 			updateMode: 0,		// 0 - full memory
 								// 1 - single memory
 
@@ -216,13 +216,14 @@ define(function(require){
 		// console.log('[Brain] Draw memory...');
 
 		// clear canvas
-		if (!this.busy) {
-			this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-		}
+		// if (!this.busy) {
+			// this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		// }
 
 		// draw brain cells / memory
-		for (var idx = 0; idx < this.memory.cells.length; idx++) {
-			this.paintCell(this.memory.cells[idx]);
+		for (var idx = 0; idx < (this.memory.cells.length / 3); idx++) {
+			var randomCell = ~~(Math.random() * this.memory.cells.length);
+			this.paintCell(this.memory.cells[randomCell]);
 		}
 	};
 
