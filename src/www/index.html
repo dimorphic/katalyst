@@ -19,9 +19,12 @@
         <![endif]-->
     </head>
 
-    <body>
+    <body ng-controller="AppController as app">
+		<div id="app" style="color: #fff;">
+            msg: {{ app.test }}
 
-		<div id="app"></div>
+            <Brain></Brain>
+        </div>
 
         <!-- APP DEPS -->
 		<script src="/js/vendor/require.js" data-main="/js/main.js"></script>
