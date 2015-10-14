@@ -4,8 +4,14 @@ define(function(require){
 	var AppController = function AppController($timeout) {
 		var vm = this;
 
+		// ---------------
+        // PUBLIC METHODS
+        // ---------------
 		vm.test = 'lolz bro. magic!';
 
+		// ---------------
+        // PRIVATE METHODS
+        // ---------------
 		var _activate = function() {
 			console.log('App controller up!');
 
@@ -18,7 +24,9 @@ define(function(require){
 		_activate();
 	};
 
+	// inject modules
 	AppController.$inject = ['$timeout'];
 
+	// expose
 	return AppController;
 });
