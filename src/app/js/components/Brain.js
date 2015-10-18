@@ -13,10 +13,17 @@ define(function(require){
 	//
 	angular.module(MODULE_NAME, [])
 		.directive(MODULE_NAME.toLowerCase(),
-			function() {
+			['$window',
+			function($window) {
 				// DOM link
-				var link = function(scope, element) {
+				var link = function(scope, element, attr, ctrl) {
 					console.log('Brain link ok!');
+
+					// ... also bind to window resize event
+					angular.element($window).bind('resize', function() {
+						// console.log('resize bro!');
+						ctrl.onScreenResize();
+					});
 				};
 
 				// return directive config
@@ -28,6 +35,7 @@ define(function(require){
 					controllerAs: 'brain'
 				};
 			}
+		]
 	);
 
 	return MODULE_NAME;
