@@ -66,8 +66,8 @@ define(function(require){
 			// $timeout(function() {
 			memory.update();
 			++vm.redrawCounter;
-			// });
 			$scope.$apply();
+			// });
 		};
 
 		//
