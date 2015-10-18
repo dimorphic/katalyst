@@ -7,9 +7,6 @@
 <ul>
 	<Braincell
 		ng-repeat="cell in brain.memory.cells track by cell.id"
-		size="{{cell.size}}"
-		query="{{cell.query}}"
-		noise="{{cell.noise}}"
-		fill="cell.fill">
+		cell="cell">
 	</Braincell>
 </ul>
