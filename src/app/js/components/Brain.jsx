@@ -21,7 +21,7 @@ define(function(require){
 	if (benchmark) {
 		fpsMeter = stats.createMeter('fps', { top: 0, left: 0 });
 		msMeter = stats.createMeter('ms', { top: 0, left: 80 });
-		mbMeter = stats.createMeter('mb', { top: 0, left: 160 });
+		// mbMeter = stats.createMeter('mb', { top: 0, left: 160 });
 	}
 
 	//
@@ -70,7 +70,7 @@ define(function(require){
 			if (benchmark) {
 				fpsMeter.begin();
 				msMeter.begin();
-				mbMeter.begin();
+				// mbMeter.begin();
 			}
 
 			// update & render
@@ -80,7 +80,7 @@ define(function(require){
 			if (benchmark) {
 				fpsMeter.end();
 				msMeter.end();
-				mbMeter.end();
+				// mbMeter.end();
 			}
 		}
 	};
