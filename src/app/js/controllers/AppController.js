@@ -7,17 +7,12 @@ define(function(require){
 		// ---------------
         // PUBLIC METHODS
         // ---------------
-		vm.test = 'lolz bro. magic!';
 
 		// ---------------
         // PRIVATE METHODS
         // ---------------
 		var _activate = function() {
-			console.log('App controller up!');
-
-			$timeout(function() {
-				vm.test = 'oh noes. it worked?';
-			}, 2000);
+			// console.log('App controller up!');
 		};
 
 		// ...and call it

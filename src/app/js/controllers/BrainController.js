@@ -63,6 +63,8 @@ define(function(require){
 		//
 		var update = function() {
 			// console.log('update memory!');
+
+			// @TODO: $timeout might boost things up
 			// $timeout(function() {
 			memory.update();
 			++vm.redrawCounter;
