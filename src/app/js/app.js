@@ -6,7 +6,8 @@ define(function(require){
 
 	// components
 	var COMPONENTS = [
-		require('components/Brain')
+		require('components/Brain'),
+		require('components/Braincell')
 	];
 
 	// define app main module
