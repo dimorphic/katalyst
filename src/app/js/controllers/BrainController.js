@@ -33,11 +33,6 @@ define(function(require){
 		vm.redrawCounter = 0;
 		vm.memory = [];
 
-		// screen resize handler
-		vm.onScreenResize = function() {
-			console.log('resize bro!!!!!!');
-		};
-
 		// ---------------
         // PRIVATE METHODS
         // ---------------
@@ -124,6 +119,21 @@ define(function(require){
 					memory.generateNoise();
 				}, 6000);
 			}
+		};
+
+		//
+		//	screen resize handler
+		//
+		vm.onScreenResize = function() {
+			console.log('resize bro!');
+
+			// rebuild/reboot memory
+			vm.memory = [];
+			memory.boot();
+
+			$timeout(function() {
+				vm.memory = memory;
+			});
 		};
 
 		// ...and call it
