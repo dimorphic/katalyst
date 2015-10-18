@@ -39,13 +39,11 @@ define(function(require){
 					// need jquery to overload .css() method
 					$cell.css(getStyle());
 
+					// watch for memory query change and recolor cell
 					scope.$watch('cell.query',
 						function(newValue, oldValue) {
 							if (newValue !== oldValue) {
 								$cell.css(getStyle());
-								// console.log('query old: ', oldValue);
-								// console.log('query new: ', newValue, cell.id);
-								// console.log(' ');
 							}
 						}
 					);
