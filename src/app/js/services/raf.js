@@ -30,4 +30,6 @@ define(function(require){
 			}
 		]
 	);
+
+	return MODULE_NAME;
 });

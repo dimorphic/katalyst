@@ -6,6 +6,8 @@ define(function(require){
 
 	// components
 	var COMPONENTS = [
+		require('services/raf'),
+
 		require('components/Brain'),
 		require('components/Braincell')
 	];
