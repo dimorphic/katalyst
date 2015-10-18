@@ -125,8 +125,8 @@ define(function(require){
 	//
 	Memory.prototype.getMaxScreenCells = function(cellSize) {
 		// get grid max cols and rows
-		var maxCols = Math.floor(window.innerWidth / cellSize);
-		var maxRows = Math.floor(window.innerHeight / cellSize);
+		var maxCols = ~~(window.innerWidth / cellSize);
+		var maxRows = ~~(window.innerHeight / cellSize);
 
 		// total number of cells
 		var maxCells = maxCols * maxRows;
@@ -146,7 +146,7 @@ define(function(require){
 		var rowIndex = null;
 		var colIndex = null;
 
-		rowIndex = Math.floor(cellIndex / this.grid.maxCols);
+		rowIndex = ~~(cellIndex / this.grid.maxCols);
 		colIndex = Math.ceil(cellIndex % this.grid.maxCols);
 
 		return {
@@ -163,7 +163,7 @@ define(function(require){
 		var noise = this.noiseMap;
 
 		var cellValue = noise.perlin2(cellPosition.colIndex / 15, cellPosition.rowIndex / 15);
-		var cellPercent = Math.floor(((cellValue + 1) / 2) * 100);
+		var cellPercent = ~~(((cellValue + 1) / 2) * 100);
 
 		return cellPercent;
 	};
@@ -183,7 +183,7 @@ define(function(require){
 		var hue, saturation,
 			lightness, textLightness;
 
-		var randomness = Math.floor(Math.random() * 25);
+		var randomness = ~~(Math.random() * 25);
 
 		// Hue
 		if (val < 70) {
