@@ -2,6 +2,7 @@ define(function(require){
 	'use strict';
 
 	// deps
+	var $ = require('jquery');
 	var angular = require('angular');
 
 	// settings
@@ -15,28 +16,39 @@ define(function(require){
 			function() {
 				// DOM link
 				var link = function(scope, element, attrs) {
-					// var cell = scope.cell();
+					var cell = scope.cell;
 
-					// console.log('Braincell link ok!', cell);
+					// cache cell element
+					var $cell = angular.element(element.find('.Braincell'));
 
-					/*
-					scope.$watch(
-						function(){
-							return scope.query();
-						},
+					// get style helper
+					var getStyle = function() {
+						var style = {
+							width: cell.size,
+							height: cell.size,
+							fontSize: (cell.size * 0.5),
+
+							color: cell.fill.textColor,
+							backgroundColor: cell.fill.bgColor || ''
+						};
+
+						return style;
+					};
+
+					// note: angular.element.css() missbehaves
+					// need jquery to overload .css() method
+					$cell.css(getStyle());
+
+					scope.$watch('cell.query',
 						function(newValue, oldValue) {
-							console.log('query old: ', oldValue);
-							console.log('query new: ', newValue);
-							console.log(' ');
+							if (newValue !== oldValue) {
+								$cell.css(getStyle());
+								// console.log('query old: ', oldValue);
+								// console.log('query new: ', newValue, cell.id);
+								// console.log(' ');
+							}
 						}
 					);
-					*/
-
-					// attrs.$observe('query', function(oldValue, newValue) {
-					// 	console.log('query old:', oldValue);
-					// 	console.log('query new:', newValue);
-					// 	console.log(' ');
-					// });
 				};
 
 				// return directive config
@@ -44,13 +56,7 @@ define(function(require){
 					restrict: 'E',
 					templateUrl: `templates/${MODULE_NAME}.tpl.html`,
 					link: link,
-					scope: {
-						// cell: '&',
-						// size: '@',
-						query: '@'
-						// noise: '@',
-						// fill: '@'
-					}
+					scope: true
 				};
 			}
 	);
