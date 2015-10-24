@@ -4,7 +4,8 @@ define(function(require){
 	// deps
 	var angular = require('angular');
 
-	var app = require('app');
+	// app module
+	require('app');
 
 	//
 	// DOM ready
