@@ -33,7 +33,7 @@ define(function(require){
 		// options
 		this.animation = {
 			// play with this!
-			alive: 1, // brain is 'alive' (randomize memory activity) ?
+			alive: 0, // brain is 'alive' (randomize memory activity) ?
 			updateMode: 0,		// 0 - full memory
 								// 1 - single memory
 
@@ -131,6 +131,24 @@ define(function(require){
 				this.think();
 			}.bind(this), 5000);
 		}
+	};
+
+	//
+	//	Brain translate term to number helper
+	//
+	Brain.prototype.translate = function(term) {
+		return helpers.toNumbers(term);
+	};
+
+	//
+	//	Brain interpret user term / query
+	//
+	Brain.prototype.interpret = function(term) {
+		// translate term to number seed
+		var translation = this.translate(term);
+
+		// think / dream it
+		this.think(translation);
 	};
 
 	//
