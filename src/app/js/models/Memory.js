@@ -83,15 +83,17 @@ define(function(require){
 	//	Memory.generateNoise()
 	//	generate noise map and apply to memory cells
 	//
-	Memory.prototype.generateNoise = function() {
-		// console.log('[memory.noise] generating noise map...');
+	Memory.prototype.generateNoise = function(seed) {
+		// console.log('[Memory] generating noise map...', seed);
 
 		if (!this.cells.length) {
 			throw new Error('No Memory cells, bro.');
 		}
 
+		seed = seed || Math.random();
+
 		// reset noise map
-		this.noiseMap = new Noise(Math.random());
+		this.noiseMap = new Noise(seed);
 
 		// add noise to memory cells
 		this.cells.forEach(function(memoryCell, idx) {
@@ -182,6 +184,7 @@ define(function(require){
 		var hue, saturation,
 			lightness, textLightness;
 
+		// random factor
 		var randomness = ~~(Math.random() * 25);
 
 		// Hue
@@ -191,15 +194,16 @@ define(function(require){
 			hue = 60 - randomness;
 		}
 
+		// Saturation
+		// saturation = ~~(Math.random() * 90) * (val / randomness);
+		saturation = 90;
+
 		// Lightness
 		if (val < 50) {
 			lightness = 5;
 		} else {
 			lightness = val / 1.5 - randomness;
 		}
-
-		//Saturation
-		saturation = 90;
 
 		// Text lightness
 		if (val < 45) {
