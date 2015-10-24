@@ -9,7 +9,7 @@ define(function(require){
 	var Ear = require('components/Ear');
 
 	// pointers
-	var APP, EAR;
+	var BRAIN, EAR;
 
 	//
 	// VOICE COMMANDS
@@ -17,7 +17,7 @@ define(function(require){
 	var COMMANDS = {
 		'hello *term': function(term) {
 			// interpret user term / query
-			APP.interpret(term);
+			BRAIN.interpret(term);
 		}
 	};
 
@@ -26,12 +26,13 @@ define(function(require){
 	//
 	$(function() {
 		// initialize Brain
-		APP = new Brain('#app');
+		BRAIN = new Brain('#app');
 		EAR = new Ear(COMMANDS, { autoRestart: false });  // should be true
 
 		// restart listening for voice inputs (mic tends to fail sometimes on local)
 		// note: need HTTPS to stop the browser for asking mic permissions
-		$('#boot').on('click', function() {
+		$('#start-voice').on('click', function() {
+			BRAIN.animation.alive = 0;
 			EAR.listen();
 		});
 	});

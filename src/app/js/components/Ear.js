@@ -24,8 +24,7 @@ define(function(require){
 		this.engine.addCommands(commands);
 
 		// start listening
-		// note: need HTTPS to stop the browser for asking mic permissions
-		this.listen();
+		// this.listen();
 	};
 
 	//
@@ -36,6 +35,9 @@ define(function(require){
 			throw new Error('Need a Speech engine bro!');
 		}
 
+		console.log('[Ear] Listening...');
+
+		// note: need HTTPS to stop the browser for asking mic permissions
 		this.engine.start(this.config);
 	};
 
@@ -49,8 +51,8 @@ define(function(require){
 
 		// log each mached result
 		this.engine.addCallback('resultMatch', function(userSaid, cmdText, phrases) {
-			console.log(`[EAR] i heard: ${userSaid} / ${cmdText}`);
-			console.log('[EAR] phrases:', phrases);
+			console.log(`[Ear] i heard: ${userSaid} (${cmdText})`);
+			console.log('[Ear] phrases:', phrases);
 			console.log(' ');
 		});
 	};
