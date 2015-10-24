@@ -180,9 +180,10 @@ define(function(require){
 		// snapshot value
 		var val = noise;
 
-		var hue, saturation,
-			lightness, textLightness;
+		var hue, saturation, lightness,
+			textLightness;
 
+		// random factor
 		var randomness = ~~(Math.random() * 25);
 
 		// Hue
@@ -192,15 +193,16 @@ define(function(require){
 			hue = 60 - randomness;
 		}
 
+		// Saturation
+		// saturation = ~~(Math.random() * 90) * (val / randomness);
+		saturation = 90;
+
 		// Lightness
 		if (val < 50) {
 			lightness = 5;
 		} else {
 			lightness = val / 1.5 - randomness;
 		}
-
-		//Saturation
-		saturation = 90;
 
 		// Text lightness
 		if (val < 45) {
