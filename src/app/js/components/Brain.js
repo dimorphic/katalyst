@@ -95,20 +95,12 @@ define(function(require){
 	Brain.prototype.onScreenResize = function() {
 		console.log('[Brain] screen resize!', this.memory.grid.maxCells);
 
-		// cancel animation
-		if (this.animation.useRAF) {
-			window.cancelRequestAnimFrame(this.animation.updateTimer);
-		} else {
-			clearInterval(this.animation.updateTimer);
-		}
-
 		// reboot memory
 		this.memory.boot();
 
-		// restart dream / animation
-		setTimeout(function() {
-			this.animate();
-		}.bind(this), 300);
+		// reset canvas to full window size
+		this.canvas.width = window.innerWidth;
+		this.canvas.height = window.innerHeight;
 	};
 
 	//
@@ -264,7 +256,7 @@ define(function(require){
 		}
 
 		// draw cell stats
-		// this.paintCounter();
+		this.paintCounter();
 	};
 
 	//
