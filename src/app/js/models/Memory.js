@@ -39,7 +39,7 @@ define(function(require){
 	//	kick start memory conciousness
 	//
 	Memory.prototype.boot = function(opts) {
-		console.log('[Memory] booting...', opts);
+		// console.log('[Memory] booting...', opts);
 
 		// create full memory
 		this.build();
