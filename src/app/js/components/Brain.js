@@ -30,10 +30,9 @@ define(function(require){
 		this.cells = [];
 		this.busy = false;
 
-		// options
+		// options. play with this!
 		this.animation = {
-			// play with this!
-			alive: 0, // brain is 'alive' (randomize memory activity) ?
+			alive: true, // brain is 'alive' (randomize memory activity) ?
 			updateMode: 0,		// 0 - full memory
 								// 1 - single memory
 
@@ -61,8 +60,8 @@ define(function(require){
 		// create new Memory
 		this.memory = new Memory({ updateMode: this.animation.updateMode });
 
-		// go dream
-		this.dream();
+		// go animate / dream
+		this.animate();
 	};
 
 	//
@@ -108,14 +107,14 @@ define(function(require){
 
 		// restart dream / animation
 		setTimeout(function() {
-			this.dream();
+			this.animate();
 		}.bind(this), 300);
 	};
 
 	//
-	//	Brain animate & dream helper
+	//	Brain animate helper
 	//
-	Brain.prototype.dream = function() {
+	Brain.prototype.animate = function() {
 		// console.log('[Brain] Dreaming ', this.memory.cells.length, ' cells...');
 
 		// start animation
@@ -155,6 +154,10 @@ define(function(require){
 	//	Brain think / dream helper
 	//
 	Brain.prototype.think = function(seed) {
+		if (!this.animation.alive && !seed) {
+			return void 0;
+		}
+
 		// set busy flag, we're transitioning to a new memory
 		this.busy = true;
 
