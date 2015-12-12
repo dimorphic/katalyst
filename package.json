@@ -4,6 +4,7 @@
   "description": "Katalyst Boilerplate",
   "main": "gulpfile.js",
   "scripts": {
+    "start": "NODE_ENV=development webpack-dev-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -16,6 +17,9 @@
   "author": "Sabin Tudor <nyx@dimorphic.net>",
   "license": "CC",
   "devDependencies": {
+    "babel-core": "^6.2.1",
+    "babel-loader": "^6.2.0",
+    "babel-preset-es2015": "^6.1.18",
     "browser-sync": "^2.7.6",
     "clear": "0.0.1",
     "connect-history-api-fallback": "^1.1.0",
