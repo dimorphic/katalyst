@@ -1,2 +1,12 @@
+// var comp = require('./components/component');
+import Comp from './components/component';
+
 // bye bye requirejs!
 console.log('main.js bro');
+
+
+const msg1 = Comp.hallo();
+const msg2 = Comp.msg;
+
+console.log('msg1: ', msg1);
+console.log('msg2: ', msg2);
