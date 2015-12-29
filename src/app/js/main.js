@@ -1,6 +1,9 @@
 // var comp = require('./components/component');
 import Comp from './components/component';
 
+// styles test
+import 'scss/main.scss';
+
 // bye bye requirejs!
 console.log('main.js bro');
 
