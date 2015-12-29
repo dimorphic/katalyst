@@ -1,8 +1,8 @@
 export default {
-	hallo: function() {
-		var msg = 'hey bro';
-		return msg;
-	},
+    hallo: () => {
+        const msg = 'hey bro';
+        return msg;
+    },
 
-	msg: 'hey ho'
+    msg: 'hey ho'
 };
