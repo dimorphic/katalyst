@@ -7,8 +7,8 @@ import 'scss/main.scss';
 // bye bye requirejs!
 console.log('main.js bro');
 
-var b = 2;
-a = 'lol';
+// var b = 2;
+// a = 'lol';
 
 
 const msg1 = Comp.hallo();

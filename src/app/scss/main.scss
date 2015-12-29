@@ -3,15 +3,15 @@
 // ------------------------------------ //
 
 // DEPS
-// @import "lib/reset";
-// @import "tools/mixins";
-// @import "utils/clearfix";
-// @import "utils/global";
+@import "lib/reset";
+@import "tools/mixins";
+@import "utils/clearfix";
+@import "utils/global";
 
 //
 // MAGIC
 //
-$base-color: #f00;
+$base-color: #f1f1f1;
 
 body {
     background: $base-color;
