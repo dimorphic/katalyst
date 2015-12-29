@@ -30,9 +30,34 @@ const PLUGINS = [
 ];
 
 //
+//  DEFAULT PRELOADERS
+//
+const PRELOADERS = [
+    {
+		test: /\.js$|.jsx$/,
+		loader: 'eslint'
+    }
+];
+
+//
 //	DEFAULT LOADERS
 //
 const LOADERS = [
+    // HTML
+	{
+		test: /\.html$/,
+		loaders: ['html']
+	},
+
+	// IMAGES / SVG
+	{
+    	test: /.*\.(gif|png|jpe?g|svg)$/i,
+    	loaders: [
+      		`file?hash=sha512&digest=hex&name=${BUNDLES.img}`,
+      		'image-webpack?{progressive:true, optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}}'
+    	]
+  	},
+
 	// CSS / SCSS
 	{
 		test: /\.(scss|css)$/,
@@ -41,9 +66,15 @@ const LOADERS = [
 			'css-loader',
 			'autoprefixer-loader?browsers=last 2 versions',
 			'sass-loader?outputStyle=expanded'
-		],
-		include: `${PATHS.app}/scss`,
-		// @TODO: add node_modules / bower_components CSS imports ?
+            /*
+            @TODO: add modules / node / bower import paths?
+            + [
+                `includePaths[]=${PATHS.app}/scss`,
+                'includePaths[]=' + (path.resolve( __dirname, 'node_modules', 'src'))
+            ].join('&')
+            */
+		]
+		// include: `${PATHS.app}/scss`,
 	},
 
 	// JS + ES6
@@ -59,32 +90,7 @@ const LOADERS = [
 			path.join( __dirname, 'node_modules' ),
 			path.join( __dirname, 'bower_components' )
 		]
-	},
-
-	// HTML
-	{
-		test: /\.html$/,
-		loaders: ['html']
-	},
-
-	// IMAGES / SVG
-	{
-    	test: /.*\.(gif|png|jpe?g|svg)$/i,
-    	loaders: [
-      		`file?hash=sha512&digest=hex&name=${BUNDLES.img}`,
-      		'image-webpack?{progressive:true, optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}}'
-    	]
-  	}
-];
-
-//
-//  DEFAULT PRELOADERS
-//
-const PRELOADERS = [
-    {
-		test: /\.js$|.jsx$/,
-		loader: 'eslint'
-    }
+	}
 ];
 
 //
@@ -118,8 +124,6 @@ const CONFIG = {
 
     eslint: {
     	configFile: `${PATHS.app}/js/.eslintrc`
-        // emitErrors: true
-        // failOnError: true
     },
 
 	resolve: {
@@ -130,18 +134,18 @@ const CONFIG = {
 			'.jsx',
 			'.css',
 			'.scss',
-		]
-		/*
+		],
+
+        /* @TODO: check imports of vendor assets
 		modulesDirectories: [
-			`${PATHS.app}/assets`, // static assets
-			`${PATHS.app}/scss`,
-			// `${PATHS.app}/vendor`, // bower alias ?
+			`${PATHS.app}/assets`,   // static assets
+			`${PATHS.app}/scss`,     // css styles
 
 			// fallbacks
-			'node_modules'
-			// 'bower_components'
+            `${PATHS.app}/vendor`, // bower alias ?
+			'node_modules',
 		]
-		*/
+        */
 	}
 };
 

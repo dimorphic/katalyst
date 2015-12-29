@@ -61,7 +61,5 @@ CONFIG.devServer = {
 	}
 };
 
-console.log('WEBPACK CFG @ ', CONFIG.eslint);
-
 // expose
 module.exports = CONFIG;
