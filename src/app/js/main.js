@@ -1,18 +1,14 @@
-// var comp = require('./components/component');
-import Comp from './components/component';
-
 // styles test
 import 'scss/main.scss';
 
-// bye bye requirejs!
-console.log('main.js bro');
+const canvas = document.querySelector('#cvs');
+const ctx = canvas.getContext('2d');
 
-// var b = 2;
-// a = 'lol';
+canvas.width = 400;
+canvas.height = 400;
 
+ctx.fillStyle = '#000';
+ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-const msg1 = Comp.hallo();
-const msg2 = Comp.msg;
-
-console.log('msg1: ', msg1);
-console.log('msg2: ', msg2);
+ctx.fillStyle = '#0f0';
+ctx.fillRect(30, 30, 100, 100);
