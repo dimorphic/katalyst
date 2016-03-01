@@ -58,32 +58,14 @@ const LOADERS = [
     	]
   	},
 
-	// CSS / SCSS
-	{
-		test: /\.(scss|css)$/,
-		loaders: [
-			'style-loader',
-			'css-loader',
-			'autoprefixer-loader?browsers=last 2 versions',
-			'sass-loader?outputStyle=expanded'
-            /*
-            @TODO: add modules / node / bower import paths?
-            + [
-                `includePaths[]=${PATHS.app}/scss`,
-                'includePaths[]=' + (path.resolve( __dirname, 'node_modules', 'src'))
-            ].join('&')
-            */
-		]
-		// include: `${PATHS.app}/scss`,
-	},
-
 	// JS + ES6
 	{
 		test: /\.js$|.jsx$/,
 		loader: 'babel',
 		query: {
             cacheDirectory: true,
-			presets: ['es2015', 'stage-2']
+			presets: ['es2015', 'stage-2'],
+            plugins: ['transform-object-assign']
 		},
 		include: `${PATHS.app}/js`,
 		exclude: [

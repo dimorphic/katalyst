@@ -1,8 +1,9 @@
 // deps
-const path = require('path');
 const webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-// const PATHS = require('./config').paths;
+const PATHS = require('./config').paths;
 
 // extend base config
 const CONFIG = Object.assign({}, require('./webpack.base'));
@@ -18,11 +19,6 @@ const BUNDLES = {
 //	PRODUCTION PLUGINS
 //
 CONFIG.plugins.push(
-	new webpack.optimize.UglifyJsPlugin({
-		name: 'vendor',
-		filename: '[name].[hash].js',
-		minChunks: Infinity
-	}),
 	new webpack.optimize.OccurenceOrderPlugin(),
 	new webpack.optimize.UglifyJsPlugin({
 		compress: {
@@ -35,7 +31,25 @@ CONFIG.plugins.push(
 			comments: false
 		}
 	}),
-	new webpack.optimize.AggressiveMergingPlugin()
+	new webpack.optimize.AggressiveMergingPlugin(),
+
+    // copy HTML entry point
+    new CopyWebpackPlugin([
+        { from: `${PATHS.public}/index.html` },
+    ])
+);
+
+//
+//  PRODUCTION LOADERS
+//
+CONFIG.module.loaders.push(
+  // CSS / SCSS
+  {
+    test: /\.(scss|css)$/,
+    loader: ExtractTextPlugin.extract(
+      'style-loader',
+      'css-loader!autoprefixer-loader?browsers=last 2 versions!sass-loader?outputStyle=expanded')
+  }
 );
 
 // expose

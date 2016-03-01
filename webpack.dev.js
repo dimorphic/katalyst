@@ -1,5 +1,4 @@
 // deps
-const path = require('path');
 const webpack = require('webpack');
 
 const PATHS = require('./config').paths;
@@ -27,6 +26,22 @@ CONFIG.plugins.push(
 	// new webpack.optimize.OccurenceOrderPlugin(), // use only in prod/build ?
 	new webpack.HotModuleReplacementPlugin()
 	// new webpack.NoErrorsPlugin() // don't emit assets on errors
+);
+
+//
+//  DEVELOPMENT LOADERS
+//
+CONFIG.module.loaders.push(
+    // CSS / SCSS
+    {
+        test: /\.(scss|css)$/,
+        loaders: [
+            'style-loader',
+            'css-loader',
+            'autoprefixer-loader?browsers=last 2 versions',
+            'sass-loader?outputStyle=expanded'
+        ]
+    }
 );
 
 // LINT ?
